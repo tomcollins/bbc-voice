@@ -2,8 +2,7 @@
   'baseUrl': '/',
 
   'paths': {
-    'pubsub' : '../src/vendor/events/pubsub',
-    'jquery' : 'empty',
+    'marionette' : '../src/vendor/marionette/lib/backbone.marionette.js',
     'bbcvoice' : '../src/js'
   },
   'out': 'dist/primary.all.js'

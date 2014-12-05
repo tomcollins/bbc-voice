@@ -11,7 +11,7 @@ module.exports = function() {
         {
           expand: true,
           cwd: '<%= config.paths.less %>',
-          src: ['**/*.less', '!**/_*.less'],
+          src: ['*.less', '**/*.less', '!**/_*.less'],
           dest: '<%= config.paths.css %>',
           ext: '.css'
         }

@@ -25,7 +25,10 @@ module.exports = function() {
       tasks: ['jshint:app', 'jscs', 'test:cli']
     },
     less: {
-      files: '<%= config.paths.less %>/**/*.less',
+      files: [
+        '<%= config.paths.less %>/*.less',
+        '<%= config.paths.less %>/**/*.less'
+      ],
       tasks: ['less', 'recess']
     }
   };

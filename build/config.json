@@ -1,7 +1,6 @@
 {
   "buildfiles": "build/**/*.js",
   "gruntfile": "Gruntfile.js",
-  "templatefile": "build/template/index.html",
   "karmaconf": "build/karma.conf.js",
   "paths": {
     "app": "src/",
@@ -17,8 +16,5 @@
   "server": {
     "host": "localhost",
     "port": "9001"
-  },
-  "template": {
-    "html": "build/template/index.html"
   }
 }
