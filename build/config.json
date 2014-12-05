@@ -1,0 +1,24 @@
+{
+  "buildfiles": "build/**/*.js",
+  "gruntfile": "Gruntfile.js",
+  "templatefile": "build/template/index.html",
+  "karmaconf": "build/karma.conf.js",
+  "paths": {
+    "app": "src/",
+    "less": "src/less/",
+    "js": "src/js/",
+    "images": "src/img/",
+    "minjs": "dist/js/",
+    "css": "src/css/",
+    "test": "test/",
+    "template": "build/template",
+    "dist": "dist/"
+  },
+  "server": {
+    "host": "localhost",
+    "port": "9001"
+  },
+  "template": {
+    "html": "build/template/index.html"
+  }
+}

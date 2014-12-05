@@ -8,7 +8,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     config: grunt.file.readJSON('./build/config.json'),
-    jshint: require('./build/jshint')(grunt),
+    /*jshint: require('./build/jshint')(grunt),
     karma: require('./build/karma')(grunt),
     less: require('./build/less')(grunt),
     recess: require('./build/recess')(grunt),
@@ -23,11 +23,10 @@ module.exports = function(grunt) {
     cssmin: require('./build/cssmin')(grunt),
     requirejs: require('./build/require')(grunt),
     imagemin: require('./build/imagemin')(grunt),
-    sprite: require('./build/sprites')(grunt)
+    sprite: require('./build/sprites')(grunt)*/
   });
 
   grunt.registerTask('sprites', ['sprite', 'imagemin']);
-  grunt.registerTask('barlesque', 'Downloads Barlesque templates from API', require('./build/barlesque')(grunt));
   grunt.registerTask('template', 'Generate index.html from templates', require('./build/template')(grunt));
   grunt.registerTask('css', ['less', 'recess']);
   grunt.registerTask('test', ['connect:test', 'watch']);

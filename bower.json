@@ -19,6 +19,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "marionette": "~2.2.2"
     "requirejs": "~2.1.14",
     "jasmine": "~2.0.0",
     "sinon": "~1.10.2",
