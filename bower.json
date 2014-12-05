@@ -1,0 +1,27 @@
+{
+  "name": "bbc-voice",
+  "version": "0.0.1",
+  "homepage": "https://github.com/",
+  "authors": [
+    "BBC"
+  ],
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "main": "dist/primary.all.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "requirejs": "~2.1.14",
+    "jasmine": "~2.0.0",
+    "sinon": "~1.10.2",
+    "jquery": "~2.1.1"
+  }
+}
