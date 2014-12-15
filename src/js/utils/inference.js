@@ -2,19 +2,14 @@
 
 // Speech inference
 
-define(['underscore', 'utils/pubsub'], function(_, pubsub) {
+define(
+  ['underscore', 'utils/pubsub', 'utils/interpreter'],
+  function(_, pubsub, Interpreter) {
 
   var Inference = function () {
-    this._words = {
-      apps:
-        ['news', 'weather'],
-      reserved_words:
-        ['home', 'next', 'prev', 'more', 'back'],
-      date:
-        ['today', 'tomorrow', 'monday', 'tuesday', 'wednesday'],
-      locations:
-        ['cardiff', 'london']
-    };
+    this.navigation_commands = ['home', 'next', 'prev', 'more', 'back'];
+    this.interpreter = new Interpreter();
+    this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
   };
 
   /**
@@ -27,20 +22,11 @@ define(['underscore', 'utils/pubsub'], function(_, pubsub) {
     });
   };
 
-  // Predicate functions
-
   /**
-   * @return { boolean } Is a given word an application identifier
+   * @return { boolean } Is a given word a nav command
    */
-  Inference.prototype.app_word = function (word) {
-    return _.contains(this._words.apps, word);
-  };
-
-  /**
-   * @return { boolean } Is a given word reserved
-   */
-  Inference.prototype.reserved_word = function (word) {
-    return _.contains(this._words.reserved_words, word);
+  Inference.prototype.is_navigation_command = function (word) {
+    return _.contains(this.navigation_commands, word);
   };
 
   /**
@@ -49,14 +35,16 @@ define(['underscore', 'utils/pubsub'], function(_, pubsub) {
    * @phrase { string } a user speech input
    */
   Inference.prototype.react = function (phrase) {
+    console.log('USER SAID ' + phrase);
     var normalized = phrase.toLowerCase().trim();
     var tokens = this.tokenize(phrase);
-
-    // Reserved words like home, next, prev etc
-    if (tokens.length == 1 && this.reserved_word(phrase)) {
+    // Simple reserved action phrase like home, next, prev etc
+    if (tokens.length == 1 && this.is_navigation_command(phrase)) {
       pubsub.emitEvent('voice:' + phrase, []);
+    // A more complex route command
     } else {
-      pubsub.emitEvent('voice:command', [tokens]);
+      var routeCommand = this.interpreter.interpret(phrase);
+      pubsub.emitEvent('voice:route', routeCommand);
     }
   };
 
