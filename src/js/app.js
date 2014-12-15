@@ -18,11 +18,27 @@ require(['jquery',
          'utils/inference',
          'utils/voice-input'], function($, pubsub, Controllers, Inference, VoiceInput) {
 
-  console.log('app');
+  console.log('app started');
+
   var input = new VoiceInput();
   var inf = new Inference();
+
+  pubsub.on('voice:home', function ( ) {
+    console.log('HOME event triggered');
+  });
+
+  pubsub.on('voice:next', function ( ) {
+    console.log('NEXT event triggered');
+  });
+
+  pubsub.on('voice:command', function () {
+    console.log('COMMAND event triggered');
+    console.log(arguments);
+  });
+
+  // Listen for voice input and react to the input
   input.listen(function (speech) {
-    console.log(inf.tokenize(speech));
+    inf.react(speech);
   });
 
   var controllers = new Controllers();
