@@ -1,45 +1,39 @@
-define(['jquery', 'views', 'utils/synthesis'],
-  function($, Views, synthesis) {
+/* global require */
 
-    var currentView = undefined;
+'use strict';
 
-    var currentViewIsWeather = false;
+require.config({
+  baseUrl: '/js',
+  paths: {
+    'jquery': 'vendor/jquery.min',
+    'eventemitter': 'vendor/EventEmitter.min',
+    'page': '/vendor/page.js/page'
+  }
+});
 
-    function setView(view) {
-      var nextView = function() {
-        $('#main').replaceWith('<div id="main"></div>');
-        currentView = view;
-        currentView.render();
-      };
-      if (currentView) {
-        currentView.remove(nextView);
-      } else {
-        nextView();
-      }
+require(['jquery', 'utils/pubsub', 'controllers'], function($, pubsub, Controllers) {
+
+  console.log('app');
+
+  var controllers = new Controllers();
+
+  // routes
+
+  var routeIndex = function() {
+    },
+    routeNews = function() {
+      controllers.setController('news');
+    },
+    routeWeather = function() {
+      controllers.setController('weather');
     };
 
-    return {
-      initialise: function() {
-        var headerView = new Views.Header();
-        headerView.render();
+  //page.base('/');
+  page('/', routeIndex);
+  page('/news', routeNews);
+  page('/weather', routeWeather);
+  page();
 
-        var welcomeView = new Views.Welcome();
-        setView(welcomeView);
+});
 
-        $('#header').on('click', function(){
-          var view;
-          if (!currentViewIsWeather) {
-            currentViewIsWeather = true;
-            view = new Views.Weather();
-          } else {
-            currentViewIsWeather = false;
-            view = new Views.Welcome();
-          }
-          setView(view);
-        });
-
-      }
-    };
-
-  });
 

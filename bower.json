@@ -21,6 +21,7 @@
   "devDependencies": {
     "marionette": "~2.2.2",
     "requirejs": "~2.1.15",
-    "eventEmitter": "~4.2.10"
+    "eventEmitter": "~4.2.10",
+    "page.js": "~1.5.0"
   }
 }

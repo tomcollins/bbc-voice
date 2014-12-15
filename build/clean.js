@@ -2,9 +2,7 @@
 
 module.exports = function() {
   return {
-    serve: [
-      '<%= config.paths.css %>'
-    ],
+    serve: [],
     dist: [
       '<%= config.paths.dist %>/**/*'
     ]
