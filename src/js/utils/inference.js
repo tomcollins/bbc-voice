@@ -7,7 +7,7 @@ define(
   function(_, pubsub, Interpreter) {
 
   var Inference = function () {
-    this.navigation_commands = ['home', 'next', 'prev', 'more', 'back'];
+    this.navigation_commands = ['home', 'next', 'previous', 'more', 'back'];
     this.interpreter = new Interpreter();
     this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
   };
@@ -18,7 +18,7 @@ define(
    */
   Inference.prototype.tokenize = function (input) {
     return _.map(input.split(/\s+/), function (word) {
-      return word.toLowerCase();
+      return word.toLowerCase().trim();
     });
   };
 
@@ -35,16 +35,21 @@ define(
    * @phrase { string } a user speech input
    */
   Inference.prototype.react = function (phrase) {
+
     console.log('USER SAID ' + phrase);
-    var normalized = phrase.toLowerCase().trim();
+
     var tokens = this.tokenize(phrase);
-    // Simple reserved action phrase like home, next, prev etc
-    if (tokens.length == 1 && this.is_navigation_command(phrase)) {
-      pubsub.emitEvent('voice:' + phrase, []);
-    // A more complex route command
-    } else {
-      var routeCommand = this.interpreter.interpret(phrase);
-      pubsub.emitEvent('voice:route', routeCommand);
+
+    if (tokens[0] === 'bbc') {
+      tokens = tokens.slice(1);
+      // Simple reserved action phrase like home, next, prev etc
+      if (tokens.length == 1 && this.is_navigation_command(phrase)) {
+        pubsub.emitEvent('voice:' + phrase, []);
+      // A more complex route command
+      } else {
+        var routeCommand = this.interpreter.interpret(phrase);
+        pubsub.emitEvent('voice:route', routeCommand);
+      }
     }
   };
 
