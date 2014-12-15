@@ -1,4 +1,4 @@
-/* global require */
+/*global require */
 
 'use strict';
 
@@ -28,5 +28,3 @@ require.config({
 require(['app'], function(App) {
   App.initialise();
 });
-
-
