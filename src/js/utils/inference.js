@@ -44,10 +44,13 @@ define(
       tokens = tokens.slice(1);
       // Simple reserved action phrase like home, next, prev etc
       if (tokens.length == 1 && this.is_navigation_command(phrase)) {
-        pubsub.emitEvent('voice:' + phrase, []);
-      // A more complex route command
+        var event = 'voice:' + phrase;
+        console.log('TRIGGERING EVENT: ' + event);
+        pubsub.emitEvent(event, []);
+        // A more complex route command
       } else {
         var routeCommand = this.interpreter.interpret(phrase);
+        console.log('TRIGGERING EVENT: ' + routeCommand);
         pubsub.emitEvent('voice:route', routeCommand);
       }
     }
