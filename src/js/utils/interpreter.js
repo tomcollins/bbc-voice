@@ -1,18 +1,34 @@
 /*global require define */
 
 var Interpreter = function () {
+
   this.apps      = ['news', 'weather'];
   this.dates     = ['today', 'tomorrow'];
+  this.days      = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   this.locations = ['cardiff', 'london'];
+
   this.news_topics = [
     'technology',
     'entertainment',
     'sport',
     'politics'
   ];
+
+  this.all_words = [this.apps, this.dates,this.locations,this.days];
+  this.word_list = [].concat.apply([], this.all_words);
 };
 
-// Linear search
+/**
+ * Check if a word is a known word
+ * @return { boolean } is this a known word
+ */
+Interpreter.prototype.is_known_word = function (word) {
+  return this.linear_search(this.word_list, word);
+};
+
+/**
+ * Check if a sequence xs contains a token x
+ */
 Interpreter.prototype.linear_search = function (xs, x) {
   for (var i=0; i<xs.length; i++) {
     if (xs[i] == x) return true;
@@ -40,13 +56,24 @@ Interpreter.prototype.contains_news_topic = function (tokens) {
   return this.union_search(this.news_topics, tokens);
 };
 
+// show me the weather in cardiff
+Interpreter.prototype.filterTokens = function (tokens) {
+  var toks = [];
+  for (var i=0; i<tokens.length; i++) {
+    if (this.is_known_word(tokens[i])) {
+      toks.push(tokens[i]);
+    }
+  }
+  return toks;
+};
+
 /**
  * @param { array[string] } tokens
  */
 Interpreter.prototype.interpret = function (tokens) {
-  return tokens.join('/');
+  return this.filterTokens(tokens).join('/');
 };
 
-define(['underscore'], function(_) {
-  return Interpreter;
-});
+// define(['underscore'], function(_) {
+//   return Interpreter;
+// });
