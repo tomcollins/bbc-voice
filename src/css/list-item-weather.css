@@ -1,27 +1,27 @@
-.list-item-news {
+.list-item-weather {
     padding: 10px 0;
 }
 
 
-.list-item-news h2,
-.list-item-news p {
+.list-item-weather h2,
+.list-item-weather p {
     padding: 0;
     margin: 0;
     font-size: 1.7em;
     opacity: 0.35;
     line-height: 1.2;
 }
-.list-item-news p {
+.list-item-weather p {
     font-size: 1.3em;
     color: #9a9a9a;
     line-height: 1.5;
 }
 
 
-.list-item-news h2 {
+.list-item-weather h2 {
 
 }
-.list-item-selected .list-item-news h2 {
+.list-item-selected .list-item-weather h2 {
     opacity: 0.6;
 }
 

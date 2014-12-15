@@ -48,6 +48,14 @@ require(['jquery',
 
   var controllers = new Controllers();
 
+  pubsub.addListener('voice:news', function() {
+    page('/news');
+  });
+
+  pubsub.addListener('voice:weather', function() {
+    page('/weather/cardiff');
+  });
+
   // routes
 
   var routeIndex = function() {
@@ -55,14 +63,15 @@ require(['jquery',
     routeNews = function() {
       controllers.setController('news');
     },
-    routeWeather = function() {
-      controllers.setController('weather');
+    routeWeather = function(context) {
+      console.log('weather', context);
+      controllers.setController('weather', context);
     };
 
   //page.base('/');
   page('/', routeIndex);
   page('/news', routeNews);
-  page('/weather', routeWeather);
+  page('/weather/:location', routeWeather);
   page();
 
 });

@@ -86,11 +86,27 @@ define(['jquery', 'utils/pubsub'],
       }, 10);
     };
 
-    List.prototype.hide = function() {
-      var _this = this;
+    List.prototype.hide = function(callback) {
+      var _this = this,
+        transitionEndCount = 0,
+        transitionEndMax = this.items.length,
+        validateTransitionEnd = function() {
+          transitionEndCount++;
+          if (transitionEndCount == transitionEndMax) {
+            return true;
+          }
+        };
       this.transitionToClass(_this.$listElement, 'list-closing', false, function() {
         //_this.$listElement.removeClass('list-closing');
-      });
+        pubsub.emitEvent('list:hide:complete');
+        if (callback) {
+          callback();
+        }
+      }, validateTransitionEnd);
+    };
+
+    List.prototype.destroy = function() {
+      
     };
 
     List.prototype.next = function() {

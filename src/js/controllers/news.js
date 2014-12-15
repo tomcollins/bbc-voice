@@ -6,30 +6,51 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
 
     ControllerNews.prototype.show = function($element) {
       var _this = this;
+      this.$element = $element;
+      this.isShown = true;
       this.fetchData(function(data) {
         _this.data = data;
         _this.render($element);
       });
     };
 
+    ControllerNews.prototype.hide = function(callback) {
+      var _this = this;
+      pubsub.removeEvent('list:show:complete');
+      pubsub.removeEvent('voice:next');
+      pubsub.removeEvent('voice:previous');
+      if (!this.isShown) {
+        callback();
+      } else {
+        this.list.hide(function(){
+          _this.list.destroy();
+          _this.$element.empty();
+          callback();
+        });
+        this.isShown = false;
+
+      }
+    };
+
     ControllerNews.prototype.render = function($element) {
-      var list = new List();
-      this.data.list.forEach(function(data, index) {
+      var _this = this;
+      this.list = new List();
+      this.data.news.forEach(function(data, index) {
         if (index < 10) {
-          list.addItem(new ListItemNews(data));
+          _this.list.addItem(new ListItemNews(data));
         }
       });
-      list.render($element);
+      this.list.render($element);
       pubsub.addListener('list:show:complete', function() {
-        list.setIndex(0);
+        _this.list.setIndex(0);
       });
       pubsub.addListener('voice:next', function() {
-        list.next();
+        _this.list.next();
       });
       pubsub.addListener('voice:previous', function() {
-        list.prev();
+        _this.list.prev();
       });
-      list.show();
+      this.list.show();
     };
 
     ControllerNews.prototype.fetchData = function(callback) {
@@ -37,7 +58,6 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
         url: 'http://api-newshack.rhcloud.com/news',
         dataType: 'json',
         success: function(data) {
-          console.log('success', data);
           callback(data);
         }
       });
