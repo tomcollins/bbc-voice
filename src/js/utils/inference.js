@@ -1,6 +1,6 @@
 /*global define */
 
-define([], function() {
+define(['underscore'], function(_) {
 
   var Inference = function () {
     this._words = {
@@ -10,11 +10,13 @@ define([], function() {
   };
 
   Inference.prototype.tokenize = function (input) {
-    return input.split(/\s+/);
+    return _.map(input.split(/\s+/), function (word) {
+      return word.toLowerCase();
+    });
   };
 
   Inference.prototype.is_app_word = function (word) {
-
+    return _.contains(this._words.apps, word);
   };
 
   Inference.prototype.is_reserved_word = function (word) {

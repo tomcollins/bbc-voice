@@ -6,6 +6,7 @@ require.config({
   baseUrl: '/js',
   paths: {
     'jquery': 'vendor/jquery.min',
+    'underscore': 'vendor/underscore',
     'eventemitter': 'vendor/EventEmitter.min',
     'page': '/vendor/page.js/page'
   }
