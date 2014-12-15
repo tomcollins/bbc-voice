@@ -1,3 +1,5 @@
+/*global define */
+
 define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
   function($, pubsub, ControllerNews, ControllerWeather) {
 
@@ -31,8 +33,9 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
         _this.controller.show(_this.$element);
       }, 500);
 
+      this.controller = new this.modules[controllerKey]();
+      this.controller.render(this.$element);
     };
 
     return Controllers;
-
 });
