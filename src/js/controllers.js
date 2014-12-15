@@ -1,3 +1,5 @@
+/*global define */
+
 define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
   function($, pubsub, ControllerNews, ControllerWeather) {
 
@@ -12,9 +14,8 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
 
     Controllers.prototype.setController = function(controllerKey) {
       this.controller = new this.modules[controllerKey]();
-      this.controller.render(this.$element)
+      this.controller.render(this.$element);
     };
 
     return Controllers;
-
 });
