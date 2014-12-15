@@ -46,6 +46,8 @@
     "request": "^2.36.0",
     "requirejs": "~2.1.14",
     "time-grunt": "^1.0.0",
-    "xml2js": "^0.4.4"
+    "xml2js": "^0.4.4",
+    "grunt-connect-rewrite": "^0.2.1",
+    "grunt-connect-route": "^0.2.7"
   }
 }

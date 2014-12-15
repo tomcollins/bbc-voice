@@ -11,11 +11,7 @@ module.exports = function() {
     },
     build: {
       files: '<%= config.buildfiles %>',
-      tasks: ['jshint:build']
-    },
-    html: {
-      files: '<%= config.paths.template %>/**/*',
-      tasks: ['template']
+      //tasks: ['jshint:build']
     },
     js: {
       files: [],
@@ -23,14 +19,7 @@ module.exports = function() {
         '<%= config.paths.js %>/**/*.js',
         '<%= config.paths.test %>/**/*.js'
       ],
-      tasks: ['jshint:app', 'jscs'/*, 'test:cli'*/]
-    },
-    less: {
-      files: [
-        '<%= config.paths.less %>/*.less',
-        '<%= config.paths.less %>/**/*.less'
-      ],
-      tasks: ['less', 'recess']
+      //tasks: ['jshint:app', 'jscs'/*, 'test:cli'*/]
     }
   };
 };
