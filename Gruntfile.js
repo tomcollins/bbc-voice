@@ -27,13 +27,13 @@ module.exports = function(grunt) {
     sprite: require('./build/sprites')(grunt)*/
   });
 
-  grunt.registerTask('sprites', ['sprite', 'imagemin']);
-  grunt.registerTask('css', ['less', 'recess']);
-  grunt.registerTask('test', ['connect:test', 'watch']);
-  grunt.registerTask('test:cli', ['karma:run']);
-  grunt.registerTask('test:ci', ['karma:ci']);
+  grunt.registerTask('css', ['less'/*, 'recess'*/]);
+  //grunt.registerTask('sprites', ['sprite', 'imagemin']);
+  //grunt.registerTask('test', ['connect:test', 'watch']);
+  //grunt.registerTask('test:cli', ['karma:run']);
+  //grunt.registerTask('test:ci', ['karma:ci']);
   grunt.registerTask('serve', ['clean:serve', 'css', 'connect:server', 'watch']);
-  grunt.registerTask('build', ['clean:serve', 'concurrent:lint', 'test:cli']);
+  grunt.registerTask('build', ['clean:serve', 'concurrent:lint'/*, 'test:cli'*/]);
   grunt.registerTask('dist', ['build', 'clean:dist', 'copy:js', 'copy:css', 'cssmin', 'uglify', 'requirejs']);
 
 

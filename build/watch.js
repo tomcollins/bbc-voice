@@ -18,11 +18,12 @@ module.exports = function() {
       tasks: ['template']
     },
     js: {
-      files: [
+      files: [],
+      Xfiles: [
         '<%= config.paths.js %>/**/*.js',
         '<%= config.paths.test %>/**/*.js'
       ],
-      tasks: ['jshint:app', 'jscs', 'test:cli']
+      tasks: ['jshint:app', 'jscs'/*, 'test:cli'*/]
     },
     less: {
       files: [

@@ -1,22 +1,45 @@
-/* global require */
+define(['jquery', 'views', 'utils/synthesis'],
+  function($, Views, synthesis) {
 
-require.config({
-  baseUrl: '/',
-  paths: {
-    'jquery' : 'vendor/jquery/dist/jquery',
-    'underscore' : 'vendor/underscore/underscore',
-    'backbone' : 'vendor/backbone/backbone',
-    'marionette' : 'vendor/marionette/lib/backbone.marionette.min'
-  }
-});
+    var currentView = undefined;
 
-require([
-    'jquery',
-    'marionette'
-  ], function($, Marionette) {
+    var currentViewIsWeather = false;
 
-  'use strict';
+    function setView(view) {
+      var nextView = function() {
+        $('#main').replaceWith('<div id="main"></div>');
+        currentView = view;
+        currentView.render();
+      };
+      if (currentView) {
+        currentView.remove(nextView);
+      } else {
+        nextView();
+      }
+    };
 
-  console.log('App');
+    return {
+      initialise: function() {
+        var headerView = new Views.Header();
+        headerView.render();
 
-});
+        var welcomeView = new Views.Welcome();
+        setView(welcomeView);
+
+        $('#header').on('click', function(){
+          var view;
+          if (!currentViewIsWeather) {
+            currentViewIsWeather = true;
+            view = new Views.Weather();
+          } else {
+            currentViewIsWeather = false;
+            view = new Views.Welcome();
+          }
+          setView(view);
+        });
+
+      }
+    };
+
+  });
+

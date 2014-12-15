@@ -4,9 +4,32 @@
     <title>BBC Voice</title>
     <link rel='stylesheet' href='css/app.css' />
     <script src='./vendor/requirejs/require.js'></script>
-    <script src='./js/app.js'></script>
+    <script src='./js/init.js'></script>
+
+    <script id="template-header" type="text/html">
+      <div id="status-container"></div>
+    </script>
+
+    <script id="template-weather" type="text/html">
+      <div id="list-container" class="main-list-container"></div>
+    </script>
+
+    <script id="template-welcome" type="text/html">
+      <div id="list-container" class="main-list-container"></div>
+      <div id="article-container"></div>
+    </script>
+
+    <script id="template-article" type="text/html">
+      <div id="article" class="article article-inactive">
+        <h1 class="article-title">Article Title</h1>
+        <p  class="article-sub-title">2 hours ago</p>
+      </div>
+    </script>
+
+
   </head>
   <body>
-
+    <div id="header"></div>
+    <div id="main"></div>
   </body>
 </html>

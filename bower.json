@@ -20,6 +20,7 @@
   "dependencies": {},
   "devDependencies": {
     "marionette": "~2.2.2",
-    "requirejs": "~2.1.15"
+    "requirejs": "~2.1.15",
+    "eventEmitter": "~4.2.10"
   }
 }

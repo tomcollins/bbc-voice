@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       options: {
         base: '<%= config.paths.test %>',
         open: true,
-        livereload: true,
+        livereload: false,
         middleware: function(connect) {
           var paths = grunt.config.get('config.paths');
           return [
