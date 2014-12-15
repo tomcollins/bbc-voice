@@ -10,7 +10,7 @@ define(['jquery', 'utils/pubsub'],
         timeAgo = moment(this.data.lastUpdated).fromNow();
 
       html = '<div class="list-item-news column-wrap">'
-        + '<h2>' +this.data.shortName +'</h2>'
+        + '<h2>' +this.data.collectionName +' | ' +this.data.shortName +'</h2>'
         + '<p>' +timeAgo +'</p>'
         + '</div>';
 
@@ -18,10 +18,15 @@ define(['jquery', 'utils/pubsub'],
     };
 
     ListItemNews.prototype.activate = function() {
-      pubsub.emitEvent('voice:speak', [this.data.name]);
+      var message = 'From ' +this.data.collectionName +' news. '
+        + this.data.name +'. '
+        + this.data.summary +'.';
+      pubsub.emitEvent('speech:speak', [message]);
     };
 
-    
+    ListItemNews.prototype.deactivate = function() {
+      pubsub.emitEvent('speech:cancel');
+    };
 
     return ListItemNews;
 

@@ -179,6 +179,8 @@ define(['jquery', 'utils/pubsub'],
       this.index = index;
       if (this.$selectedItemElement) {
 
+        _this.selectedItem.deactivate();
+
         closeItem(this.$selectedItemElement, function(){
           deselectItem(_this.$selectedItemElement, function() {
             if (isNegativeIndexTransition) {

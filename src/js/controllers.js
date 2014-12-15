@@ -40,6 +40,9 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
 
     Controllers.prototype.setController = function(controllerKey, context) {
       var _this = this;
+
+      pubsub.emitEvent('speech:cancel');
+
       if (this.controller) {
         this.controller.hide(function(){
           _this.hideHeader();
@@ -71,10 +74,12 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
           if (location.name !== location.container) {
             name += ', ' +location.container;
           }
+          pubsub.emitEvent('speech:speak', ['Weather for ' +location.name]);
           _this.showHeader(module.label +' - ' +name);
           _this.showController();
         });
       } else {
+        pubsub.emitEvent('speech:speak', [module.label]);
         this.showHeader(module.label);
         this.showController();
       }

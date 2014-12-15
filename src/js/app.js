@@ -41,9 +41,13 @@ require(['jquery',
   });
 
   var voiceOutput = new VoiceOutput();
-  pubsub.addListener('voice:speak', function(message){
+  pubsub.addListener('speech:speak', function(message){
     voiceOutput.say(message);
   });
+  pubsub.addListener('speech:cancel', function(){
+    voiceOutput.cancel();
+  });
+
   var keyInput = new KeyInput();
 
   var controllers = new Controllers();

@@ -11,6 +11,7 @@ define([], function() {
 
   VoiceOutput.prototype.prepareSpeech = function (speech) {
     var msg = new SpeechSynthesisUtterance(speech);
+    var voices = speechSynthesis.getVoices()
     msg.rate  = this.rate;
     msg.pitch = this.pitch;
     msg.lang  = this.lang;
@@ -24,7 +25,18 @@ define([], function() {
    * voice.say('Hello world');
    */
   VoiceOutput.prototype.say = function (speech) {
+    this.cancel();
     speechSynthesis.speak(this.prepareSpeech(speech));
+  };
+
+  /**
+   * Read a command out loud i.e
+   *
+   * var voice = new Voice();
+   * voice.say('Hello world');
+   */
+  VoiceOutput.prototype.cancel = function (speech) {
+    speechSynthesis.cancel();
   };
 
   return VoiceOutput;
