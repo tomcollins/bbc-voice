@@ -74,6 +74,6 @@ Interpreter.prototype.interpret = function (tokens) {
   return this.filterTokens(tokens).join('/');
 };
 
-// define(['underscore'], function(_) {
-//   return Interpreter;
-// });
+define(['underscore'], function(_) {
+  return Interpreter;
+});
