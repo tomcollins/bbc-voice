@@ -29,11 +29,14 @@ define([], function() {
     return recognition.start();
   };
 
-  VoiceInput.prototype.speechInputHandler = function (event, callback) {
+  /**
+   * @param { Function } f a callback function
+   */
+  VoiceInput.prototype.speechInputHandler = function (event, f) {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[0].isFinal) {
-        var contents = event.results[i][0].transcript.trim();
-        callback(contents);
+      if (event.results[i].isFinal) {
+        var final_transcript = event.results[i][0].transcript;
+        f(final_transcript);
       }
     }
   };

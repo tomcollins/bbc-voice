@@ -1,4 +1,4 @@
-/* global require */
+/*global require page */
 
 'use strict';
 
@@ -11,9 +11,18 @@ require.config({
   }
 });
 
-require(['jquery', 'utils/pubsub', 'controllers'], function($, pubsub, Controllers) {
+require(['jquery',
+         'utils/pubsub',
+         'controllers',
+         'utils/inference',
+         'utils/voice-input'], function($, pubsub, Controllers, Inference, VoiceInput) {
 
   console.log('app');
+  var input = new VoiceInput();
+  var inf = new Inference();
+  input.listen(function (speech) {
+    console.log(inf.tokenize(speech));
+  });
 
   var controllers = new Controllers();
 
@@ -35,5 +44,3 @@ require(['jquery', 'utils/pubsub', 'controllers'], function($, pubsub, Controlle
   page();
 
 });
-
-
