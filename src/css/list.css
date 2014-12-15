@@ -1,7 +1,7 @@
 .list {
     position: relative;
     margin: 0;
-    padding: 10px;
+    padding: 0;
     list-style: none;
     top: 0;
     transition-property: top;
@@ -30,7 +30,6 @@
 .list-item {
     position: relative;
     height: 100px;
-    margin-bottom: 10px;
     background-color: #222;
     overflow: hidden;
     transition-property: top, left, height, opacity;
@@ -39,6 +38,9 @@
     opacity: 1;
     top: 0;
     left: 0;
+}
+.list-item:nth-child(even) {
+   background-color: #262626;
 }
 .list-item-open {
     height: 320px;

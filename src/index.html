@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/list.css" />
     <link rel="stylesheet" href="./css/list-item-news.css" />
     <script src="/js/vendor/page.js"></script>
+    <script src="/js/vendor/moment.min.js"></script>
     <script data-main="./js/app.js" src="/js/vendor/require.js"></script>
   </head>
   <body>
@@ -116,19 +117,18 @@
         </div><!-- .column-wrap -->
       </div>
 
-      <div id="module-head">
-        <div class="column-wrap">
-          <h1>Module Name</h1>
+      <div id="module-head-wrapper">
+        <div id="module-head">
+          <div id="module-head-inner">
+            <div class="column-wrap">
+              <h1></h1>
+            </div>
+          </div>
         </div>
       </div>
 
       <div id="module-content">
       </div>
-
-      <ul>
-        <li><a href="./news">/news</a></li>
-        <li><a href="./weather">/weather</a></li>
-      </ul>
 
     </div><!-- #wrap -->
 

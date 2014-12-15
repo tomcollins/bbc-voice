@@ -7,8 +7,7 @@ require.config({
   paths: {
     'jquery': 'vendor/jquery.min',
     'underscore': 'vendor/underscore',
-    'eventemitter': 'vendor/EventEmitter.min',
-    'page': '/vendor/page.js/page'
+    'eventemitter': 'vendor/EventEmitter.min'
   }
 });
 
@@ -16,14 +15,22 @@ require(['jquery',
          'utils/pubsub',
          'controllers',
          'utils/inference',
-         'utils/voice-input'], function($, pubsub, Controllers, Inference, VoiceInput) {
+         'utils/voice-input',
+         'utils/voice-output',
+         'utils/key-input'], function($, pubsub, Controllers, Inference, VoiceInput, VoiceOutput, KeyInput) {
 
-  console.log('app');
+
   var input = new VoiceInput();
   var inf = new Inference();
   input.listen(function (speech) {
     console.log(inf.tokenize(speech));
   });
+
+  var voiceOutput = new VoiceOutput();
+  pubsub.addListener('voice:speak', function(message){
+    voiceOutput.say(message);
+  });
+  var keyInput = new KeyInput();
 
   var controllers = new Controllers();
 

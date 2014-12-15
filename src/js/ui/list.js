@@ -1,7 +1,8 @@
 define(['jquery', 'utils/pubsub'],
   function($, pubsub) {
 
-    var classListItemSelected = 'list-item-selected',
+    var listItemheight = 100,
+      classListItemSelected = 'list-item-selected',
       classListItemOpen = 'list-item-open';
 
     var List = function() {
@@ -103,14 +104,27 @@ define(['jquery', 'utils/pubsub'],
       this.setIndex(index);
     };
 
+    List.prototype.prev = function() {
+      var index = this.index - 1;
+      if (undefined === this.index) {
+        return;
+      }
+      if (index < 0) {
+        index = this.items.length - 1;
+      }
+      this.setIndex(index);
+    };
+
     List.prototype.setIndex = function(index) {
       var _this = this,
         isNegativeIndexTransition = (undefined !== this.index) && (this.index > index),
         updateSelectedItem = function() {
+          _this.selectedItem = _this.items[index];
           _this.selectedItemElement = _this.$listElement.find('li.list-item')[index];
           _this.$selectedItemElement = $(_this.selectedItemElement);
         },
         itemReady = function() {
+          _this.selectedItem.activate();
           pubsub.emitEvent('list:item:active:complete', [_this.items[index], index]);
         },
         openItem = function($element, callback) {
@@ -136,7 +150,7 @@ define(['jquery', 'utils/pubsub'],
             };
             _this.addTransitionHandler(_this.listElement, transitionEndHandler);
           }
-          _this.$listElement.css('top', -(index * 110));
+          _this.$listElement.css('top', -(index * listItemheight));
         };
 
       if (index <0) {
