@@ -26,7 +26,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       pubsub.addListener('voice:next', function() {
         list.next();
       });
-      pubsub.addListener('voice:prev', function() {
+      pubsub.addListener('voice:previous', function() {
         list.prev();
       });
       list.show();
