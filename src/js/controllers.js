@@ -32,9 +32,6 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
         _this.controller = new module.class();
         _this.controller.show(_this.$element);
       }, 500);
-
-      this.controller = new this.modules[controllerKey]();
-      this.controller.render(this.$element);
     };
 
     return Controllers;

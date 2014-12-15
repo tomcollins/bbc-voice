@@ -37,7 +37,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
         url: 'http://api-newshack.rhcloud.com/news',
         dataType: 'json',
         success: function(data) {
-          console.log(data);
+          console.log('success', data);
           callback(data);
         }
       });
