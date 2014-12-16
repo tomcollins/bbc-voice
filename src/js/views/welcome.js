@@ -1,3 +1,5 @@
+/*global define */
+
 define( ['app', 'jquery', 'utils/pubsub', 'views/list', 'views/article'],
     function(App, $, pubsub, List, Article) {
 
