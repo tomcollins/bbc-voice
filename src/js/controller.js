@@ -88,7 +88,6 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
         _this.list.prev();
       });
       pubsub.addListener('list:item:complete', function() {
-        console.log('list item complete');
         _this.itemIsComplete = true;
         if (_this.autoPlay) {
           _this.itemIsComplete = false;

@@ -24,12 +24,9 @@ define(
   };
 
   Inference.prototype.muteToggle = function () {
-    console.log('Muting input');
     if (this.muted) {
-      console.log('Input is now active');
       this.unmute();
     } else {
-      console.log('Input is now muted');
       this.mute();
     }
   };
@@ -63,7 +60,7 @@ define(
     // Return if we are muted
     if (this.muted) { return; }
 
-    console.log('USER SAID ' + phrase);
+    //console.log('USER SAID ' + phrase);
     var tokens = this.tokenize(phrase);
 
     // only do something if the phrase starts with "BBC"
@@ -75,12 +72,12 @@ define(
       // Simple reserved action phrase like home, next, prev etc
       if (tokens.length == 1 && this.is_navigation_command(tokens[0])) {
         var event = 'voice:' + tokens[0];
-        console.log('TRIGGERING EVENT: ' + event);
+        //console.log('TRIGGERING EVENT: ' + event);
         pubsub.emitEvent(event, []);
       // A more complex route command
       } else {
         var routeCommand = this.interpreter.interpret(tokens);
-        console.log('TRIGGERING EVENT: ' + routeCommand);
+        //console.log('TRIGGERING EVENT: ' + routeCommand);
         pubsub.emitEvent('voice:route', [routeCommand]);
       }
     }
