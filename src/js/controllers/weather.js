@@ -5,6 +5,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       var _this = this;
       this.context = context;
       this.locationTerm = context.params.location;
+      this.timeTerm = String(context.params.time).toLowerCase();
       this.location = undefined;
       this.fetchLocation(this.locationTerm, function(data) {
         if (data.response.content.locations.totalResults > 0) {
@@ -57,16 +58,25 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
     };
 
     ControllerWeather.prototype.render = function($element) {
-      var _this = this;
+      var _this = this,
+        startIndex = undefined;
       this.list = new List();
       this.data.weather.forEach(function(data, index) {
         if (index < 10) {
           _this.list.addItem(new ListItemWeather(data));
+          if (_this.timeTerm) {
+            if (!startIndex && String(data.name).toLowerCase() === _this.timeTerm) {
+              startIndex = index;
+            }
+          }
         }
       });
+      if (!startIndex) {
+        startIndex = 0;
+      }
       this.list.render($element);
       pubsub.addListener('list:show:complete', function() {
-        _this.list.setIndex(0);
+        _this.list.setIndex(startIndex);
       });
       pubsub.addListener('voice:next', function() {
         _this.list.next();

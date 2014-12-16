@@ -26,14 +26,6 @@ define(['jquery', 'utils/pubsub'],
       $element.append(html);
       this.$listElement = $element.find('.list');
       this.listElement = this.$listElement[0];
-
-      /*
-      this.$listElement.on('click', 'li', function(e) {
-        var index = $(e.currentTarget).data('list-item-index');
-        _this.setIndex(index);
-      });
-      */
-
     };
 
     List.prototype.addTransitionHandler = function(element, handler) {
@@ -212,9 +204,17 @@ define(['jquery', 'utils/pubsub'],
       } else {
         updateSelectedItem();
         selectItem(this.$selectedItemElement, function() {
-          openItem(_this.$selectedItemElement, function() {
-            itemReady();
-          });
+          if (index > 0) {
+            scrollListToIndex(function() {
+              openItem(_this.$selectedItemElement, function() {
+                itemReady();
+              });
+            });
+          } else {
+            openItem(_this.$selectedItemElement, function() {
+              itemReady();
+            });
+          }
         });
       }
 

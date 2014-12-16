@@ -11,8 +11,6 @@ define(['jquery', 'utils/pubsub'],
         ambience
         time = moment(this.data.date).format('ll');
 
-      console.log(this.data);
-
       ambience = '<div class="weather-ambience weather-ambience-' + this.data.type.id + '"></div>';
 
       weather = '<div class="weather">'
