@@ -10,6 +10,26 @@ define(
     this.navigation_commands = ['home', 'next', 'previous', 'more', 'back'];
     this.interpreter = new Interpreter();
     this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
+    this.muted = false;
+    pubsub.on('voice:toggleMute', this.muteToggle);
+  };
+
+  Inference.prototype.muteToggle = function () {
+    if (this.muted) {
+      this.unmute();
+    } else {
+      this.mute();
+    }
+  };
+
+  Inference.prototype.mute = function () {
+    this.muted = true;
+    pubsub.emitEvent('voice:mute');
+  };
+
+  Inference.prototype.unmute = function () {
+    this.muted = false;
+    pubsub.emitEvent('voice:unmute');
   };
 
   /**
@@ -35,19 +55,21 @@ define(
    * @phrase { string } a user speech input
    */
   Inference.prototype.react = function (phrase) {
-
+    // Return if we are muted
+    if (this.muted) { return; }
     console.log('USER SAID ' + phrase);
 
     var tokens = this.tokenize(phrase);
 
     if (tokens[0] === 'bbc') {
+
       tokens = tokens.slice(1);
 
       // Send a general voice trigger command with all the tokens
       pubsub.emitEvent('voice:trigger', tokens);
 
       // Simple reserved action phrase like home, next, prev etc
-      if (tokens.length == 1 && this.is_navigation_command(phrase)) {
+      if (tokens.length === 1 && this.is_navigation_command(phrase)) {
         var event = 'voice:' + phrase;
         console.log('TRIGGERING EVENT: ' + event);
         pubsub.emitEvent(event, []);
