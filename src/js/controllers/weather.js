@@ -9,6 +9,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       this.timeTerm = String(context.params.time).toLowerCase();
       this.hintTerm = String(context.params.hint).toLowerCase();
       this.location = undefined;
+
       this.fetchLocation(this.locationTerm, function(data) {
         if (data.location) {
           _this.location = data.location;
@@ -55,6 +56,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
 
     ControllerWeather.prototype.checkDataState = function() {
       var _this = this;
+      if (this.list) {
+        return;
+      }
       if (this.$element && this.location) {
         if (this.data) {
           this.render();
