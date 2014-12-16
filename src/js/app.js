@@ -17,10 +17,11 @@ require(['jquery',
          'utils/pubsub',
          'controllers',
          'ui/voice-input',
+         'ui/auto-play',
          'utils/inference',
          'utils/voice-input',
          'utils/voice-output',
-         'utils/key-input'], function($, pubsub, Controllers, UIVoiceInput, Inference, VoiceInput, VoiceOutput, KeyInput) {
+         'utils/key-input'], function($, pubsub, Controllers, UIVoiceInput, AutoPlay, Inference, VoiceInput, VoiceOutput, KeyInput) {
 
   var input = new VoiceInput();
   var inf = new Inference();
@@ -40,10 +41,11 @@ require(['jquery',
 
   var keyInput = new KeyInput();
   var uiVoiceInput = new UIVoiceInput();
-
   var controllers = new Controllers();
+  var autoPlay = new AutoPlay();
 
   var lastVoiceRoute, lastVoiceInput;
+
 
   pubsub.addListener('voice:route', function(route, input) {
     lastVoiceRoute = route.split('/').join(' ');
