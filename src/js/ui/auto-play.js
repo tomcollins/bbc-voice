@@ -5,7 +5,7 @@ define(['jquery', 'utils/pubsub'],
 
     var AutoPlay = function () {
       var _this = this;
-      this.isEnabled = true;
+      this.isEnabled = false;
        $('#autoplay').click(function () {
          _this.isEnabled = _this.isEnabled===false ? true : false;
          $(this).toggleClass('autoplay-enabled');
