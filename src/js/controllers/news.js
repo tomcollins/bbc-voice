@@ -2,13 +2,18 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, List, ListItemNews) {
 
     var ControllerNews = function(context) {
-      var _this = this;
+      var _this = this,
+        message;
       this.context = context;
       this.topicTerm = context.params.topic;
       this.topic = undefined;
       this.fetchData(this.topicTerm, function(data) {
-        if (data.topic) {
+        if (data.topic && data.topic.id) {
           _this.topic = data.topic;
+        } else {
+          message = 'I could not find any articles about ' +_this.topicTerm;
+          pubsub.emitEvent('speech:speak', [message]);
+          return;
         }
         if (data.news.length > 0) {
           _this.data = data.news;
@@ -33,13 +38,16 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       if (!this.isShown) {
         callback();
       } else {
-        this.list.hide(function(){
-          _this.list.destroy();
-          _this.$element.empty();
-          callback();
-        });
         this.isShown = false;
-
+        if (this.list) {
+          this.list.hide(function(){
+            _this.list.destroy();
+            _this.$element.empty();
+            callback();
+          });
+        } else {
+          callback();
+        }
       }
     };
 

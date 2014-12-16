@@ -1,7 +1,7 @@
 /*global define webkitSpeechRecognition SpeechSynthesisUtterance
          speechSynthesis */
 
-define([], function() {
+define(['utils/pubsub'], function(pubsub) {
 
   var VoiceInput = function () {
     this.lang = 'en-GB';
@@ -33,8 +33,10 @@ define([], function() {
    * @param { Function } f a callback function
    */
   VoiceInput.prototype.speechInputHandler = function (event, f) {
+    pubsub.emitEvent('user:speech:start');
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
+        pubsub.emitEvent('user:speech:final');
         var final_transcript = event.results[i][0].transcript;
         f(final_transcript.trim());
       }

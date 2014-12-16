@@ -1,4 +1,4 @@
-/* global require */
+/*global require */
 
 'use strict';
 
@@ -42,7 +42,7 @@ require(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'], function($, 
       //if (index === 2) {
       //  list.setIndex(1);
       //} else {
-        list.next();
+  //      list.next();
       //}
     }, 2500);
   });
@@ -56,5 +56,3 @@ require(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'], function($, 
   list.show();
 
 });
-
-

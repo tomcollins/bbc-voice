@@ -1,8 +1,11 @@
 define(['jquery', 'utils/pubsub'],
   function($, pubsub) {
 
-    var ListItemWeather = function(data) {
+    var ListItemWeather = function(data, location, matchesTimeTerm, hintTerm) {
       this.data = data;
+      this.location = location;
+      this.matchesTimeTerm = matchesTimeTerm;
+      this.hintTerm = hintTerm;
     };
 
     ListItemWeather.prototype.getHtml = function() {
@@ -10,8 +13,6 @@ define(['jquery', 'utils/pubsub'],
         weather,
         ambience
         time = moment(this.data.date).format('ll');
-
-      console.log(this.data);
 
       ambience = '<div class="weather-ambience weather-ambience-' + this.data.type.id + '"></div>';
 
@@ -36,8 +37,30 @@ define(['jquery', 'utils/pubsub'],
     };
 
     ListItemWeather.prototype.activate = function($element) {
-      var message = 'Weather for ' +this.data.name +'. '
-        + this.data.summary;
+      var _this = this,
+        message,
+        getTimeMessage = function() {
+          if ('today' === String(_this.data.name).toLowerCase()) {
+            return 'today';
+          } else {
+            return 'on ' +_this.data.name;
+          }
+        };
+
+      if (this.matchesTimeTerm && this.hintTerm === 'umbrella') {
+        if (this.data.type.id <= 5) {
+          message = 'You will not be needing an umbrella in ' +this.location.name +' ' +getTimeMessage();
+        } else if (this.data.type.id <= 10) {
+          message = 'There is a chance of rain in ' +this.location.name +' ' +getTimeMessage() +' so you had better take an umbrella just in case';
+        } else {
+          message = 'Take your umbrella. There is a high chance of rain in ' +this.location.name +' ' +getTimeMessage();
+        }
+      }
+
+      if (!message) {
+        message = 'Weather for ' +this.data.name +'. ' + this.data.summary;
+      }
+
       this.$element = $element;
       pubsub.emitEvent('speech:speak', [message]);
     };
