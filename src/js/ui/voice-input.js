@@ -15,14 +15,10 @@ define(['jquery', 'utils/pubsub'],
       pubsub.addListener('voice:trigger', function() {
         _this.trigger();
       });
-    };
 
-    VoiceInput.prototype.toggleMute = function() {
-      if (this.isMuted) {
-        pubsub.emitEvent('voice:unmute');
-      } else {
-        pubsub.emitEvent('voice:mute');
-      }
+      this.$voiceInput.on('click', function() {
+        pubsub.emitEvent('voice:toggleMute');
+      });
     };
 
     VoiceInput.prototype.mute = function() {
