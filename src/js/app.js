@@ -76,6 +76,7 @@ require(['jquery',
       var message = 'Sorry. I do not understand what you mean' + (lastVoiceRoute ? ' by ' + lastVoiceRoute : '');
       pubsub.emitEvent('voice:trigger');
       pubsub.emitEvent('speech:speak', [message]);
+      page('/');
     };
 
   //page.base('/');
