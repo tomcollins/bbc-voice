@@ -16,26 +16,14 @@ require.config({
 require(['jquery',
          'utils/pubsub',
          'controllers',
+         'ui/voice-input',
          'utils/inference',
          'utils/voice-input',
          'utils/voice-output',
-         'utils/key-input'], function($, pubsub, Controllers, Inference, VoiceInput, VoiceOutput, KeyInput) {
+         'utils/key-input'], function($, pubsub, Controllers, UIVoiceInput, Inference, VoiceInput, VoiceOutput, KeyInput) {
 
   var input = new VoiceInput();
   var inf = new Inference();
-
-  pubsub.on('voice:home', function ( ) {
-    console.log('HOME event triggered');
-  });
-
-  pubsub.on('voice:next', function ( ) {
-    console.log('NEXT event triggered');
-  });
-
-  pubsub.on('voice:command', function () {
-    console.log('COMMAND event triggered');
-    console.log(arguments);
-  });
 
   // Listen for voice input and react to the input
   input.listen(function (speech) {
@@ -51,8 +39,13 @@ require(['jquery',
   });
 
   var keyInput = new KeyInput();
+  var uiVoiceInput = new UIVoiceInput();
 
   var controllers = new Controllers();
+
+  pubsub.addListener('voice:route', function(route) {
+    page(route);
+  });
 
   pubsub.addListener('voice:news', function() {
     page('/news');
@@ -62,21 +55,25 @@ require(['jquery',
     page('/weather/cardiff');
   });
 
+
+
+
+
   // routes
 
   var routeIndex = function() {
     },
-    routeNews = function() {
-      controllers.setController('news');
+    routeNews = function(context) {
+      controllers.setController('news', context);
     },
     routeWeather = function(context) {
-      console.log('weather', context);
       controllers.setController('weather', context);
     };
 
   //page.base('/');
   page('/', routeIndex);
   page('/news', routeNews);
+  page('/news/:topic', routeNews);
   page('/weather/:location', routeWeather);
   page();
 

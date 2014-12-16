@@ -78,6 +78,13 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
           _this.showHeader(module.label +' - ' +name);
           _this.showController();
         });
+      } else if ('news' === controllerKey && context.params.topic) {
+        pubsub.addListener('news:topic', function(topic) {
+          var topicName = (topic && topic.name) ? topic.name : context.params.topic;
+          pubsub.emitEvent('speech:speak', ['News about ' +topicName]);
+          _this.showHeader(module.label +' - ' +topicName);
+          _this.showController();
+        });
       } else {
         pubsub.emitEvent('speech:speak', [module.label]);
         this.showHeader(module.label);

@@ -1,17 +1,28 @@
 define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, List, ListItemNews) {
 
-    var ControllerNews = function() {
+    var ControllerNews = function(context) {
+      var _this = this;
+      this.context = context;
+      this.topicTerm = context.params.topic;
+      this.topic = undefined;
+      this.fetchData(this.topicTerm, function(data) {
+        if (data.topic) {
+          _this.topic = data.topic;
+        }
+        if (data.news.length > 0) {
+          _this.data = data.news;
+          pubsub.emitEvent('news:topic', [_this.topic]);
+          _this.checkDataState();
+        }
+      });
     };
 
     ControllerNews.prototype.show = function($element) {
       var _this = this;
       this.$element = $element;
       this.isShown = true;
-      this.fetchData(function(data) {
-        _this.data = data;
-        _this.render($element);
-      });
+      this.checkDataState();
     };
 
     ControllerNews.prototype.hide = function(callback) {
@@ -32,12 +43,19 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       }
     };
 
+    ControllerNews.prototype.checkDataState = function() {
+      var _this = this;
+      if (this.$element && this.data) {
+        this.render(this.$element);
+      }
+    };
+
     ControllerNews.prototype.render = function($element) {
       var _this = this;
       this.list = new List();
-      this.data.news.forEach(function(data, index) {
+      this.data.forEach(function(data, index) {
         if (index < 10) {
-          _this.list.addItem(new ListItemNews(data));
+          _this.list.addItem(new ListItemNews(data, _this.topic));
         }
       });
       this.list.render($element);
@@ -53,9 +71,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       this.list.show();
     };
 
-    ControllerNews.prototype.fetchData = function(callback) {
+    ControllerNews.prototype.fetchData = function(topic, callback) {
       $.ajax({
-        url: 'http://api-newshack.rhcloud.com/news',
+        url: 'http://api-newshack.rhcloud.com/news' + (topic ? '?topic=' +topic : ''),
         dataType: 'json',
         success: function(data) {
           callback(data);

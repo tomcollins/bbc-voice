@@ -8,6 +8,10 @@ body {
     color: white;
     background-color: #131313;
 }
+body a {
+  color: #fff;
+  text-decoration: none;
+}
 
 /* latin */
 @font-face {
@@ -28,19 +32,49 @@ body {
 }
 
 .column-wrap {
+  position: relative;
   width: 720px;
   margin: 0 auto;
 }
 
 #masthead {
   width: 100%;
-  height: 41px;
+  height: 48px;
   background: #fff;
 }
 #bbc-logo {
   position: relative;
-  top: 8px;
+  top: 10px;
   left: 0;
+}
+#voice-input {
+  top: 4px; 
+  right: 0; 
+  position: absolute; 
+  border: 2px solid rgb(0, 0, 0); 
+  padding: 8px; 
+  border-radius: 100px; 
+  display: inline; 
+  width: 18px; 
+  height: 18px;
+  transition-property: border-color;
+  transition-timing-function: ease-out;
+  transition-duration: 0.3s;
+}
+#voice-input.muted {
+  border-color: red;
+}
+#voice-input.muted polygon {
+  fill: red;
+  transition-property: border-color;
+  transition-timing-function: ease-out;
+  transition-duration: 0.3s;
+}
+#voice-input.success {
+  border-color: #00FF26;
+}
+#voice-input.success polygon {
+  fill: #00FF26;
 }
 
 #module-head-wrapper {

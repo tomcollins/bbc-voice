@@ -1,8 +1,9 @@
 define(['jquery', 'utils/pubsub'],
   function($, pubsub) {
 
-    var ListItemNews = function(data) {
+    var ListItemNews = function(data, topic) {
       this.data = data;
+      this.topic = topic;
     };
 
     ListItemNews.prototype.getHtml = function() {
@@ -17,7 +18,7 @@ define(['jquery', 'utils/pubsub'],
         '<div class="background-image" style="' +style +'"></div>'
         + '<div class="list-item-news column-wrap ' +(hasImage ? 'list-item-news-with-image' : '') +'">'
         + '<div class="list-item-news-inner">' 
-        + '<h2>' +this.data.shortName +'</h2>'
+        + '<h2><a href="' +this.data.shareUrl +'">' +this.data.shortName +'</a></h2>'
         + '<p class="info"><span>' +this.data.collectionName +'</span> | ' +timeAgo +'</p>'
         + '<p class="summary">' +this.data.summary +'</p>';
         html += '</div></div>';
@@ -26,7 +27,11 @@ define(['jquery', 'utils/pubsub'],
     };
 
     ListItemNews.prototype.activate = function($element) {
-      var message = 'From ' +this.data.collectionName +' news. '
+      var message = '';
+      if (this.topic && this.topic.name && this.topic.name != this.data.collectionName) {
+        message = 'From ' +this.data.collectionName +' ';
+      }
+      message += moment(this.data.lastUpdated).fromNow() +'. '
         + this.data.name +'. '
         + this.data.summary +'.';
       this.$element = $element;
