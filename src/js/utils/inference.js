@@ -11,15 +11,7 @@ define(
     this.interpreter = new Interpreter();
     this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
     this.muted = false;
-    pubsub.on('voice:toggleMute', this.muteToggle);
-  };
-
-  Inference.prototype.muteToggle = function () {
-    if (this.muted) {
-      this.unmute();
-    } else {
-      this.mute();
-    }
+    pubsub.on('voice:toggleMute', this.muteToggle.bind(this));
   };
 
   Inference.prototype.mute = function () {
@@ -30,6 +22,17 @@ define(
   Inference.prototype.unmute = function () {
     this.muted = false;
     pubsub.emitEvent('voice:unmute');
+  };
+
+  Inference.prototype.muteToggle = function () {
+    console.log('Muting input');
+    if (this.muted) {
+      console.log('Input is now active');
+      this.unmute();
+    } else {
+      console.log('Input is now muted');
+      this.mute();
+    }
   };
 
   /**
@@ -61,19 +64,18 @@ define(
 
     var tokens = this.tokenize(phrase);
 
+    // only do something if the phrase starts with "BBC"
     if (tokens[0] === 'bbc') {
-
       tokens = tokens.slice(1);
-
       // Send a general voice trigger command with all the tokens
       pubsub.emitEvent('voice:trigger', tokens);
 
       // Simple reserved action phrase like home, next, prev etc
-      if (tokens.length === 1 && this.is_navigation_command(phrase)) {
-        var event = 'voice:' + phrase;
+      if (tokens.length == 1 && this.is_navigation_command(tokens[0])) {
+        var event = 'voice:' + tokens[0];
         console.log('TRIGGERING EVENT: ' + event);
         pubsub.emitEvent(event, []);
-        // A more complex route command
+      // A more complex route command
       } else {
         var routeCommand = this.interpreter.interpret(tokens);
         console.log('TRIGGERING EVENT: ' + routeCommand);
