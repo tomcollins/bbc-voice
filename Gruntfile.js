@@ -16,6 +16,7 @@ module.exports = function(grunt) {
       },
       rules: [
         {from: '^/css(.*)$', to: '/src/css/$1'},
+        {from: '^/img(.*)$', to: '/src/img/$1'},
         {from: '^/json(.*)$', to: '/src/json/$1'},
         {from: '^/js(.*)$', to: '/src/js/$1'},
         {from: '^/fonts(.*)$', to: '/src/fonts/$1'},
