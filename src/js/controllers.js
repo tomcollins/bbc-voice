@@ -1,7 +1,7 @@
 /*global define */
 
-define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
-  function($, pubsub, ControllerNews, ControllerWeather) {
+define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'controllers/welcome'],
+  function($, pubsub, ControllerNews, ControllerWeather, ControllerWelcome) {
 
     var Controllers = function() {
       this.currentController = undefined;
@@ -13,6 +13,10 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
         weather: {
           label: 'Weather',
           class: ControllerWeather
+        },
+        welcome: {
+          label: 'BBC Voice',
+          class: ControllerWelcome
         }
       };
       this.$wrap = $('#wrap');

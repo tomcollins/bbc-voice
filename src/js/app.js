@@ -67,7 +67,8 @@ require(['jquery',
 
   // routes
 
-  var routeIndex = function() {
+  var routeIndex = function(context) {
+    controllers.setController('welcome', context, autoPlay.isEnabled);
     },
     routeNews = function(context) {
       controllers.setController('news', context, autoPlay.isEnabled);
