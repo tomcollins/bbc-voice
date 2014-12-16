@@ -1,22 +1,127 @@
 /*global require define */
 
+var stop_words = [
+'a',
+'about',
+'above',
+'after',
+'again',
+'against',
+'all',
+'am',
+'an',
+'and',
+'any',
+'are',
+'as',
+'at',
+'be',
+'because',
+'been',
+'before',
+'being',
+'below',
+'between',
+'both',
+'but',
+'by',
+'could',
+'did',
+'do',
+'does',
+'during',
+'each',
+'few',
+'for',
+'from',
+'further',
+'had',
+'has',
+'have',
+'having',
+'he',
+'her',
+'here',
+'his',
+'how',
+'i',
+'if',
+'in',
+'into',
+'is',
+'it',
+'its',
+'itself',
+'me',
+'more',
+'most',
+'my',
+'myself',
+'need',
+'no',
+'nor',
+'not',
+'of',
+'off',
+'on',
+'once',
+'only',
+'or',
+'other',
+'ought',
+'our',
+'out',
+'over',
+'own',
+'same',
+'show',
+'she',
+'should',
+'so',
+'some',
+'such',
+'tell',
+'than',
+'that',
+'the',
+'their',
+'theirs',
+'them',
+'themselves',
+'then',
+'there',
+'these',
+'they',
+'this',
+'those',
+'through',
+'to',
+'too',
+'under',
+'until',
+'up',
+'very',
+'was',
+'want',
+'we',
+'were',
+'what',
+'when',
+'where',
+'which',
+'who',
+'why',
+'with',
+'would',
+'you',
+'your',
+'yours',
+'yourself',
+'yourselves'];
+
 var Interpreter = function () {
-
   this.apps      = ['news', 'weather'];
-
-  this.stop_words = [
-    'the',
-    'show',
-    'about',
-    'when',
-    'what',
-    'me',
-    'tell',
-    'should',
-    'i',
-    'in',
-    'is'
-  ];
+  this.stop_words = stop_words;
 };
 
 /**
@@ -86,9 +191,10 @@ Interpreter.prototype.interpret = function (tokens) {
 
   var normalized_tokens = this.filter_stop_words(tokens);
 
-  // if (this.contains_token(tokens, 'umbrella')) {
-  //   return 'weather/london/umbrella';
-  // }
+  if (this.contains_token(tokens, 'umbrella')) {
+    var umbrella_tokens = this.remove_token(normalized_tokens, 'umbrella');
+    return '/weather/' + umbrella_tokens.join('/') + '/umbrella';
+  }
 
   // news custom logic. Re-arrange news route to put news first
   if (this.contains_token(tokens, 'news')) {
@@ -96,7 +202,7 @@ Interpreter.prototype.interpret = function (tokens) {
     return '/news/' + news_tokens.join('/');
   }
 
-  // Put weather at the start of the route if pharse === cardiff weather
+  // Put weather at the start of the route if phrase === cardiff weather
   if (this.contains_token(tokens, 'weather')) {
     var weather_tokens = this.remove_token(normalized_tokens, 'weather');
     return '/weather/' + weather_tokens.join('/');
@@ -113,12 +219,12 @@ function tests ( ) {
   var d = 'what is the weather in london tomorrow';
   var e = 'news politics';
   var f = 'show me cardiff weather';
-
-  return [a,b,c,d,e,f].map(function (x) {
+  var g = 'do i need my umbrella in cardiff tomorrow';
+  return [a,b,c,d,e,f,g].map(function (x) {
     return i.interpret(x.split(' '));
   });
 }
 
-define(['underscore'], function(_) {
-  return Interpreter;
-});
+// define(['underscore'], function(_) {
+//   return Interpreter;
+// });
