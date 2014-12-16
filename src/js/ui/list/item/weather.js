@@ -1,12 +1,16 @@
-define(['jquery', 'utils/pubsub'],
-  function($, pubsub) {
+define(['jquery', 'utils/pubsub', 'ui/list/item'],
+  function($, pubsub, ListItem) {
 
     var ListItemWeather = function(data, location, matchesTimeTerm, hintTerm) {
-      this.data = data;
+      ListItem.call(this, data);
+
       this.location = location;
       this.matchesTimeTerm = matchesTimeTerm;
       this.hintTerm = hintTerm;
     };
+
+    ListItemWeather.prototype = Object.create(ListItem.prototype);
+    ListItemWeather.prototype.constructor = ListItemWeather;
 
     ListItemWeather.prototype.getHtml = function() {
       var html,
@@ -36,7 +40,7 @@ define(['jquery', 'utils/pubsub'],
       return html;
     };
 
-    ListItemWeather.prototype.activate = function($element) {
+    ListItemWeather.prototype.postActivateHook = function() {
       var _this = this,
         message,
         getTimeMessage = function() {
@@ -46,7 +50,6 @@ define(['jquery', 'utils/pubsub'],
             return 'on ' +_this.data.name;
           }
         };
-
       if (this.matchesTimeTerm && this.hintTerm === 'umbrella') {
         if (this.data.type.id <= 5) {
           message = 'You will not be needing an umbrella in ' +this.location.name +' ' +getTimeMessage();
@@ -60,21 +63,8 @@ define(['jquery', 'utils/pubsub'],
       if (!message) {
         message = 'Weather for ' +this.data.name +'. ' + this.data.summary;
       }
-
-      this.$element = $element;
-      
-      pubsub.addListener('speech:complete', function() {
-        pubsub.emitEvent('list:item:complete');
-      });
       pubsub.emitEvent('speech:speak', [message]);
-    };
-
-    ListItemWeather.prototype.deactivate = function() {
-      pubsub.removeEvent('speech:complete');
-      pubsub.emitEvent('speech:cancel');
-    };
-
-    
+    };    
 
     return ListItemWeather;
 

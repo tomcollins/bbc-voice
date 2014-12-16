@@ -1,10 +1,10 @@
-define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
-  function($, pubsub, List, ListItemWeather) {
+define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather'],
+  function($, pubsub, Controller, List, ListItemWeather) {
 
     var ControllerWeather = function(context, autoPlay) {
       var _this = this;
-      this.autoPlay = autoPlay; 
-      this.context = context;
+      Controller.call(this, context, autoPlay);
+
       this.locationTerm = context.params.location;
       this.timeTerm = String(context.params.time).toLowerCase();
       this.hintTerm = String(context.params.hint).toLowerCase();
@@ -22,43 +22,18 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       });
     };
 
-    ControllerWeather.prototype.show = function($element) {
-      var _this = this;
-      this.isShown = true;
-      this.$element = $element;
-      this.checkDataState();
-    };
-
-    ControllerWeather.prototype.hide = function(callback) {
-      var _this = this;
-      pubsub.removeEvent('list:show:complete');
-      pubsub.removeEvent('voice:next');
-      pubsub.removeEvent('voice:previous');
-      pubsub.removeEvent('list:item:complete');
-      pubsub.removeEvent('autoplay:enabled');
-      pubsub.removeEvent('autoplay:disabled');
-      if (!this.isShown) {
-        callback();
-      } else {
-        this.isShown = false;
-        if (this.list) {
-          this.list.hide(function(){
-            _this.list.destroy();
-            _this.$element.empty();
-            callback();
-          });
-        } else {
-          callback();
-        }
-        
-      }
-    };
+    ControllerWeather.prototype = Object.create(Controller.prototype);
+    ControllerWeather.prototype.constructor = ControllerWeather;
 
     ControllerWeather.prototype.checkDataState = function() {
       var _this = this;
+
+      // this is most likely not necessary and can probably be removed
+      // it was added quickly while trying to fix the double show() bug
       if (this.list) {
         return;
       }
+
       if (this.$element && this.location) {
         if (this.data) {
           this.render();
@@ -98,57 +73,22 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       if (!startIndex) {
         startIndex = 0;
       }
+      this.listStartIndex = listStartIndex;
+
       this.list.render($element);
-      pubsub.addListener('list:show:complete', function() {
-        _this.list.setIndex(startIndex);
-      });
-      pubsub.addListener('voice:next', function() {
-        _this.itemIsComplete = true;
-        _this.list.next();
-      });
-      pubsub.addListener('voice:previous', function() {
-        _this.itemIsComplete = true;
-        _this.list.prev();
-      });
-      pubsub.addListener('list:item:complete', function() {
-        _this.itemIsComplete = true;
-        if (_this.autoPlay) {
-          _this.itemIsComplete = false;
-          _this.list.next();
-        }
-      });
-      pubsub.addListener('autoplay:enabled', function() {
-        if (!_this.autoPlay) {
-          _this.autoPlay = true;
-          if (_this.itemIsComplete) {
-            _this.list.next();
-          }
-        }
-      });
-      pubsub.addListener('autoplay:disabled', function() {
-        _this.autoPlay = false;
-      });
       this.list.show();
+
+      Controller.prototype.addEventsAfterRender.call(this, $element);
     };
 
     ControllerWeather.prototype.fetchLocation = function(searchTerm, callback) {
-      $.ajax({
-        url: '//api-newshack.rhcloud.com/location?search=' + searchTerm,
-        dataType: 'json',
-        success: function(data) {
-          callback(data);
-        }
-      });
+      var url = '//api-newshack.rhcloud.com/location?search=' + searchTerm;
+      Controller.prototype.fetchData.call(this, url, callback);
     };
 
     ControllerWeather.prototype.fetchData = function(location, callback) {
-      $.ajax({
-        url: '//api-newshack.rhcloud.com/weather?location_id=' +location.id,
-        dataType: 'json',
-        success: function(data) {
-          callback(data);
-        }
-      });
+      var url = '//api-newshack.rhcloud.com/weather?location_id=' +location.id;
+      Controller.prototype.fetchData.call(this, url, callback);
     };
 
     return ControllerWeather;

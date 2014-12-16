@@ -66,6 +66,9 @@
 .page-weather .list-item-strip {
     background-color: #336c99;
 }
+.page-sport .list-item-strip {
+    background-color: yellow;
+}
 .list-item-selected .list-item-strip {
     left: 0;
 }

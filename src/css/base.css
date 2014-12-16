@@ -112,6 +112,12 @@ body a {
 .page-weather #module-head {
     background-color: #336c99;
 }
+.page-sport #module-head {
+    background-color: yellow;
+}
+.page-travel #module-head {
+    background-color: orange;
+}
 #module-head.active {
   top: 0;
 }
@@ -122,12 +128,38 @@ h1 {
   margin: 0;
   padding: 6px 0 0 0px;
 }
-
+.page-sport h1 {
+    color: #000;
+}
 
 
 #module-content {
   overflow: hidden;
 }
+
+
+
+
+
+
+.travel {
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: ease-out;
+  transition-duration: 0.3s;
+}
+.travel-active {
+  opacity: 1;
+}
+.travel.travel-close {
+  opacity: 0;
+}
+.page-travel h1 {
+  color: #000;
+}
+
+
+
 
 .welcome {
   opacity: 1;
@@ -138,7 +170,6 @@ h1 {
 .welcome.welcome-close {
   opacity: 0;
 }
-
 .welcome ul {
     position: relative;
     margin: 0;

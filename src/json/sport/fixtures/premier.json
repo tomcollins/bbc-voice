@@ -1,0 +1,41 @@
+{
+	"league": {
+		"id": "premier_league",
+		"name": "Premier League"
+	},
+	"fixtures": [
+		{
+			"date": "Sat 20th Dec",
+			"teams": {
+				"home": {
+					"name": "Swansea City"
+				},
+				"away": {
+					"name": "Tottenham Hotspurs"
+				}
+			}
+		},
+		{
+			"date": "Sat 20th Dec",
+			"teams": {
+				"home": {
+					"name": "Manchester United"
+				},
+				"away": {
+					"name": "Manchester City"
+				}
+			}
+		},
+		{
+			"date": "Sun 21st Dec",
+			"teams": {
+				"home": {
+					"name": "Newcastle United"
+				},
+				"away": {
+					"name": "Southampton"
+				}
+			}
+		}
+	]
+}

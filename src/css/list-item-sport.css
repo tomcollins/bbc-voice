@@ -1,0 +1,35 @@
+.list-item-sport {
+    padding: 10px 0;
+}
+
+.list-item-sport-fixture .fixture-date {
+    font-size: 1em;
+    font-weight: 700;
+    position: absolute;
+    top: -3px;
+    left: 0px;
+    opacity: 0.6;
+}
+
+.list-item-sport-fixture .sport-team {
+    font-size: 1.8em;
+    font-weight: 700;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    width: 320px;
+}
+.list-item-sport-fixture .sport-team-home {
+    text-align: right;
+}
+.list-item-sport-fixture .sport-team-away {
+    left: 395px;
+}
+.list-item-sport-fixture .sport-team-vs {
+    font-size: 1.2em;
+    position: absolute;
+    top: 26px;
+    left: 337px;
+    width: 40px;
+    text-align: center;
+}

@@ -1,10 +1,14 @@
-define(['jquery', 'utils/pubsub'],
-  function($, pubsub) {
+define(['jquery', 'utils/pubsub', 'ui/list/item'],
+  function($, pubsub, ListItem) {
 
     var ListItemNews = function(data, topic) {
-      this.data = data;
+      ListItem.call(this, data);
+
       this.topic = topic;
     };
+
+    ListItemNews.prototype = Object.create(ListItem.prototype);
+    ListItemNews.prototype.constructor = ListItemNews;
 
     ListItemNews.prototype.getHtml = function() {
       var html,
@@ -29,9 +33,8 @@ define(['jquery', 'utils/pubsub'],
       return html;
     };
 
-    ListItemNews.prototype.activate = function($element) {
-      var _this = this,
-        message = '';
+    ListItemNews.prototype.postActivateHook = function() {
+      var message;
       if (
         !this.topic || 
         (this.topic && this.topic.name && this.topic.name != this.data.collectionName)
@@ -41,21 +44,11 @@ define(['jquery', 'utils/pubsub'],
       message += moment(this.data.lastUpdated).fromNow() +'. '
         + this.data.name +'. '
         + this.data.summary +'.';
-      this.$element = $element;
+      pubsub.emitEvent('speech:speak', [message]);
 
-      pubsub.addListener('speech:complete', function() {
-        pubsub.emitEvent('list:item:complete');
-      });
       pubsub.addListener('voice:more', function() {
         window.location = _this.data.shareUrl;
       });
-      pubsub.emitEvent('speech:speak', [message]);
-    };
-
-    ListItemNews.prototype.deactivate = function() {
-      pubsub.removeEvent('speech:complete');
-      pubsub.removeEvent('voice:more');
-      pubsub.emitEvent('speech:cancel');
     };
 
     return ListItemNews;

@@ -1,7 +1,7 @@
 /*global define */
 
-define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'controllers/welcome'],
-  function($, pubsub, ControllerNews, ControllerWeather, ControllerWelcome) {
+define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'controllers/sport', 'controllers/travel', 'controllers/welcome'],
+  function($, pubsub, ControllerNews, ControllerWeather, ControllerSport, ControllerTravel, ControllerWelcome) {
 
     var Controllers = function() {
       this.currentController = undefined;
@@ -13,6 +13,14 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
         weather: {
           label: 'Weather',
           class: ControllerWeather
+        },
+        sport: {
+          label: 'Sport',
+          class: ControllerSport
+        },
+        travel: {
+          label: 'Travel',
+          class: ControllerTravel
         },
         welcome: {
           label: 'BBC Voice',
@@ -89,6 +97,14 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
           var topicName = (topic && topic.name) ? topic.name : context.params.topic;
           pubsub.emitEvent('speech:speak', ['News about ' +topicName]);
           _this.showHeader(module.label +' - ' +topicName);
+          _this.showController();
+        });
+      } else if ('sport' === controllerKey && context.params.league) {
+        pubsub.removeEvent('sport:league');
+        pubsub.addListener('sport:league', function(league) {
+          var leagueName = (league && league.name) ? league.name : context.params.league;
+          pubsub.emitEvent('speech:speak', [leagueName +' fixtures']);
+          _this.showHeader(module.label +' - ' +leagueName);
           _this.showController();
         });
       } else {

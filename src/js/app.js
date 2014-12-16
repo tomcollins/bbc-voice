@@ -53,14 +53,18 @@ require(['jquery',
     page(route);
   });
 
-  pubsub.addListener('example:news', function() {
+  pubsub.addListener('example:news', function() { 
     page('/news');
   });
-
   pubsub.addListener('example:weather', function() {
     page('/weather/cardiff');
   });
-
+  pubsub.addListener('example:sport', function() {
+    page('/sport/fixtures/premier');
+  });
+  pubsub.addListener('example:travel', function() {
+    page('/travel');
+  });
   pubsub.addListener('example:notFound', function() {
     page('/not/found/example');
   });
@@ -76,6 +80,12 @@ require(['jquery',
     routeWeather = function(context) {
       controllers.setController('weather', context, autoPlay.isEnabled);
     },
+    routeSport = function(context) {
+      controllers.setController('sport', context, autoPlay.isEnabled);
+    },
+    routeTravel = function(context) {
+      controllers.setController('travel', context, autoPlay.isEnabled);
+    },
     routeNotFound = function(context) {
       var message = 'Sorry. I do not understand what you mean' + (lastVoiceInput ? ' by ' + lastVoiceInput : '');
       pubsub.emitEvent('voice:trigger');
@@ -90,6 +100,8 @@ require(['jquery',
   page('/weather/:location', routeWeather);
   page('/weather/:location/:time', routeWeather);
   page('/weather/:location/:time/:hint', routeWeather);
+  page('/sport/fixtures/:league', routeSport);
+  page('/travel', routeTravel);
   page('*', routeNotFound);
   page();
 

@@ -21,7 +21,11 @@ define(['utils/pubsub'], function(pubsub) {
       } else if (50 === keyCode) {
         command = 'example:weather'; //2
       } else if (51 === keyCode) {
-        command = 'example:notFound'; //3
+        command = 'example:sport'; //3
+      } else if (52 === keyCode) {
+        command = 'example:travel'; //4
+      } else if (53 === keyCode) {
+        command = 'example:notFound'; //5
       } else if (32 === keyCode) {
         command = 'voice:toggleMute'; //space
       } else if (65 === keyCode) {

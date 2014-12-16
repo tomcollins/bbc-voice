@@ -1,25 +1,17 @@
-define(['jquery', 'utils/pubsub'],
-  function($, pubsub) {
+define(['jquery', 'utils/pubsub', 'controller'],
+  function($, pubsub, Controller) {
 
     var ControllerWelcome = function(context, autoPlay) {
-      var _this = this,
-        message;
-      this.autoPlay = autoPlay; 
-      this.context = context;
+      Controller.call(this, context, autoPlay);
+      this.hasData = false;
     };
 
-    ControllerWelcome.prototype.show = function($element) {
-      var _this = this;
-      this.$element = $element;
-      this.isShown = true;
-      this.timeoutId = setTimeout(function(){
-        _this.render($element);
-      });
-    };
+    ControllerWelcome.prototype = Object.create(Controller.prototype);
+    ControllerWelcome.prototype.constructor = ControllerWelcome;
 
     ControllerWelcome.prototype.hide = function(callback) {
       var _this = this;
-      clearTimeout(this.timeoutId);
+      this.removePubSubEvents();
       
       if (!this.isShown) {
         callback();

@@ -5,13 +5,29 @@ define(['jquery', 'utils/pubsub'],
 
     var AutoPlay = function () {
       var _this = this;
+      this.$element = $('#autoplay');
+      this.enable();
+      this.$element.click(function () {
+        if (_this.isEnabled) {
+          _this.disable();
+        } else {
+          _this.enable();
+        }
+      });
+    };
+
+    AutoPlay.prototype.enable = function() {
+      this.isEnabled = true;
+      this.$element.addClass('autoplay-enabled');
+      this.$element.text('Auto Scroll On');
+      pubsub.emitEvent('autoplay:enabled');
+    };
+
+    AutoPlay.prototype.disable = function() {
       this.isEnabled = false;
-       $('#autoplay').click(function () {
-         _this.isEnabled = _this.isEnabled===false ? true : false;
-         $(this).toggleClass('autoplay-enabled');
-         $(this).text(_this.isEnabled ? 'Auto Scroll On' : 'Auto Scroll Off');
-         pubsub.emitEvent('autoplay:' +(_this.isEnabled ? 'enabled' : 'disabled'));
-        });
+      this.$element.removeClass('autoplay-enabled');
+      this.$element.text('Auto Scroll Off');
+      pubsub.emitEvent('autoplay:disabled');
     };
 
     return AutoPlay;
