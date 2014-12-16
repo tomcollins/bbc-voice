@@ -7,7 +7,7 @@ define(
   function(_, pubsub, Interpreter) {
 
   var Inference = function () {
-    this.navigation_commands = ['home', 'next', 'previous', 'more', 'back'];
+    this.navigation_commands = ['home', 'next', 'previous', 'more', 'back', 'play'];
     this.interpreter = new Interpreter();
     this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
     this.muted = false;
