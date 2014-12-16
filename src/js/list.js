@@ -1,4 +1,4 @@
-/* global require */
+/*global require */
 
 'use strict';
 
@@ -56,5 +56,3 @@ require(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'], function($, 
   list.show();
 
 });
-
-

@@ -24,6 +24,11 @@ require(['jquery',
 
   var input = new VoiceInput();
   var inf = new Inference();
+  var autoPlay = false;
+
+  $('#auto-play').click(function () {
+    autoPlay = autoPlay===false ? true : false;
+  });
 
   // Listen for voice input and react to the input
   input.listen(function (speech) {
@@ -40,9 +45,7 @@ require(['jquery',
 
   var keyInput = new KeyInput();
   var uiVoiceInput = new UIVoiceInput();
-
   var controllers = new Controllers();
-
   var lastVoiceRoute;
 
   pubsub.addListener('voice:route', function(route, input) {

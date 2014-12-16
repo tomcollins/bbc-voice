@@ -47,16 +47,26 @@ body a {
   top: 10px;
   left: 0;
 }
+
+#auto-play {
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  top: 12px;
+  right: 60px;
+  position: absolute;
+}
+
 #voice-input {
   cursor: pointer;
-  top: 4px; 
-  right: 0; 
-  position: absolute; 
-  border: 2px solid rgb(0, 0, 0); 
-  padding: 8px; 
-  border-radius: 100px; 
-  display: inline; 
-  width: 18px; 
+  top: 4px;
+  right: 0;
+  position: absolute;
+  border: 2px solid rgb(0, 0, 0);
+  padding: 8px;
+  border-radius: 100px;
+  display: inline;
+  width: 18px;
   height: 18px;
   transition-property: border-color;
   transition-timing-function: ease-out;
