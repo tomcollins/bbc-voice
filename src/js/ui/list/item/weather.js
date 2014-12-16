@@ -62,10 +62,15 @@ define(['jquery', 'utils/pubsub'],
       }
 
       this.$element = $element;
+      
+      pubsub.addListener('speach:complete', function() {
+        pubsub.emitEvent('list:item:complete');
+      });
       pubsub.emitEvent('speech:speak', [message]);
     };
 
     ListItemWeather.prototype.deactivate = function() {
+      pubsub.removeEvent('speech:complete');
       pubsub.emitEvent('speech:cancel');
     };
 

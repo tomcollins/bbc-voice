@@ -4,11 +4,13 @@ define(['jquery', 'utils/pubsub'],
   function($, pubsub) {
 
     var AutoPlay = function () {
-      this.autoPlay = false;
+      var _this = this;
+      this.isEnabled = true;
        $('#autoplay').click(function () {
-         this.autoPlay = this.autoPlay===false ? true : false;
+         _this.isEnabled = _this.isEnabled===false ? true : false;
          $(this).toggleClass('active');
-         pubsub.emitEvent('autoplay:toggle');
+         $(this).text(_this.isEnabled ? 'Auto Scroll On' : 'Auto Scroll Off');
+         pubsub.emitEvent('autoplay:' +(_this.isEnabled ? 'enabled' : 'disabled'));
         });
     };
 

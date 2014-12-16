@@ -32,6 +32,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       pubsub.removeEvent('list:show:complete');
       pubsub.removeEvent('voice:next');
       pubsub.removeEvent('voice:previous');
+      pubsub.removeEvent('list:item:complete');
+      pubsub.removeEvent('autoplay:enabled');
+      pubsub.removeEvent('autoplay:disabled');
       if (!this.isShown) {
         callback();
       } else {
@@ -99,6 +102,17 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       });
       pubsub.addListener('voice:previous', function() {
         _this.list.prev();
+      });
+      pubsub.addListener('list:item:complete', function() {
+        if (_this.autoPlay) {
+          _this.list.next();
+        }
+      });
+      pubsub.addListener('autoplay:enabled', function() {
+        _this.autoPlay = true;
+      });
+      pubsub.addListener('autoplay:disabled', function() {
+        _this.autoPlay = false;
       });
       this.list.show();
     };

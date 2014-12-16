@@ -70,10 +70,10 @@ require(['jquery',
   var routeIndex = function() {
     },
     routeNews = function(context) {
-      controllers.setController('news', context);
+      controllers.setController('news', context, autoPlay.isEnabled);
     },
     routeWeather = function(context) {
-      controllers.setController('weather', context);
+      controllers.setController('weather', context, autoPlay.isEnabled);
     },
     routeNotFound = function(context) {
       var message = 'Sorry. I do not understand what you mean' + (lastVoiceInput ? ' by ' + lastVoiceInput : '');

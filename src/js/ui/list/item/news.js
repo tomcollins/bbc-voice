@@ -38,10 +38,15 @@ define(['jquery', 'utils/pubsub'],
         + this.data.name +'. '
         + this.data.summary +'.';
       this.$element = $element;
+
+      pubsub.addListener('speach:complete', function() {
+        pubsub.emitEvent('list:item:complete');
+      });
       pubsub.emitEvent('speech:speak', [message]);
     };
 
     ListItemNews.prototype.deactivate = function() {
+      pubsub.removeEvent('speech:complete');
       pubsub.emitEvent('speech:cancel');
     };
 

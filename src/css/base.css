@@ -51,12 +51,14 @@ body a {
 #autoplay {
   cursor: pointer;
   color: #999;
+  opacity: 0.6;
   font-weight: bold;
   top: 12px;
-  right: 60px;
+  left: 545px;
   position: absolute;
 }
-#autoplay.active {
+#autoplay.autoplay-enabled {
+  opacity: 1;
   color: #333;
 }
 

@@ -1,24 +1,29 @@
 define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, List, ListItemNews) {
 
-    var ControllerNews = function(context) {
+    var ControllerNews = function(context, autoPlay) {
       var _this = this,
         message;
+      this.autoPlay = autoPlay; 
       this.context = context;
       this.topicTerm = context.params.topic;
       this.topic = undefined;
       this.fetchData(this.topicTerm, function(data) {
-        if (data.topic && data.topic.id) {
-          _this.topic = data.topic;
-        } else {
-          message = 'I could not find any articles about ' +_this.topicTerm;
-          pubsub.emitEvent('speech:speak', [message]);
-          return;
+        if (_this.topicTerm) {
+          if (data.topic && data.topic.id) {
+            _this.topic = data.topic;
+          } else {
+            message = 'I could not find any articles about ' +_this.topicTerm;
+            pubsub.emitEvent('speech:speak', [message]);
+            return;
+          }
         }
         if (data.news.length > 0) {
           _this.data = data.news;
-          pubsub.emitEvent('news:topic', [_this.topic]);
           _this.checkDataState();
+          if (_this.topicTerm) {
+            pubsub.emitEvent('news:topic', [_this.topic]);
+          }
         }
       });
     };
@@ -35,6 +40,10 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       pubsub.removeEvent('list:show:complete');
       pubsub.removeEvent('voice:next');
       pubsub.removeEvent('voice:previous');
+      pubsub.removeEvent('list:item:complete');
+      pubsub.removeEvent('autoplay:enabled');
+      pubsub.removeEvent('autoplay:disabled');
+      
       if (!this.isShown) {
         callback();
       } else {
@@ -75,6 +84,17 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       });
       pubsub.addListener('voice:previous', function() {
         _this.list.prev();
+      });
+      pubsub.addListener('list:item:complete', function() {
+        if (_this.autoPlay) {
+          _this.list.next();
+        }
+      });
+      pubsub.addListener('autoplay:enabled', function() {
+        _this.autoPlay = true;
+      });
+      pubsub.addListener('autoplay:disabled', function() {
+        _this.autoPlay = false;
       });
       this.list.show();
     };

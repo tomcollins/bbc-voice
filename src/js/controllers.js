@@ -38,7 +38,7 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
       }, 500);
     };
 
-    Controllers.prototype.setController = function(controllerKey, context) {
+    Controllers.prototype.setController = function(controllerKey, context, autoPlay) {
       var _this = this;
 
       pubsub.emitEvent('speech:cancel');
@@ -47,15 +47,15 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
         this.controller.hide(function(){
           _this.hideHeader();
           setTimeout(function(){
-            _this.changeController(controllerKey, context);
+            _this.changeController(controllerKey, context, autoPlay);
           }, 500);
         });
       } else {
-        this.changeController(controllerKey, context);
+        this.changeController(controllerKey, context, autoPlay);
       }
     };
 
-    Controllers.prototype.changeController = function(controllerKey, context) {
+    Controllers.prototype.changeController = function(controllerKey, context, autoPlay) {
       var _this = this,
         module = this.modules[controllerKey];
 
@@ -65,7 +65,7 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather'],
 
       this.context = context;
       this.controllerKey = controllerKey;
-      this.controller = new module.class(this.context);
+      this.controller = new module.class(this.context, autoPlay);
       this.$wrap.addClass('page-' +this.controllerKey);
 
       if ('weather' === controllerKey) {
