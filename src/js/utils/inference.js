@@ -58,7 +58,7 @@ define(
    */
   Inference.prototype.react = function (phrase) {
 
-    pubsub.emitEvent('event:trigger');
+    pubsub.emitEvent('user:speech', [phrase]);
 
     // Return if we are muted
     if (this.muted) { return; }
