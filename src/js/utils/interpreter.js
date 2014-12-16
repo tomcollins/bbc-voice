@@ -199,7 +199,11 @@ Interpreter.prototype.interpret = function (tokens) {
   // news custom logic. Re-arrange news route to put news first
   if (this.contains_token(tokens, 'news')) {
     var news_tokens = this.remove_token(normalized_tokens, 'news');
-    return '/news/' + news_tokens.join('/');
+    if (news_tokens.length > 0) {
+      return '/news/' + news_tokens.join('/');
+    } else {
+      return '/news';
+    }
   }
 
   // Put weather at the start of the route if phrase === cardiff weather

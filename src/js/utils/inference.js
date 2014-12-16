@@ -62,8 +62,8 @@ define(
 
     // Return if we are muted
     if (this.muted) { return; }
-    console.log('USER SAID ' + phrase);
 
+    console.log('USER SAID ' + phrase);
     var tokens = this.tokenize(phrase);
 
     // only do something if the phrase starts with "BBC"

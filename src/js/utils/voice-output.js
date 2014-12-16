@@ -1,7 +1,7 @@
 /*global define webkitSpeechRecognition SpeechSynthesisUtterance
          speechSynthesis */
 
-define([], function() {
+define(['utils/pubsub'], function(pubsub) {
 
   var VoiceOutput = function () {
     this.rate = 1;
@@ -11,10 +11,14 @@ define([], function() {
 
   VoiceOutput.prototype.prepareSpeech = function (speech) {
     var msg = new SpeechSynthesisUtterance(speech);
-    var voices = speechSynthesis.getVoices()
+    var voices = speechSynthesis.getVoices();
     msg.rate  = this.rate;
     msg.pitch = this.pitch;
     msg.lang  = this.lang;
+    msg.onend = function ( ) {
+      console.log('speech complete');
+      pubsub.emitEvent('speech:complete');
+    };
     return msg;
   };
 
