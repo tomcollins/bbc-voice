@@ -6,6 +6,8 @@ require.config({
   baseUrl: '/js',
   paths: {
     'jquery': 'vendor/jquery.min',
+    'jquery-1.9': 'vendor/jquery.min',
+    'swfobject-2': 'vendor/bump',
     'underscore': 'vendor/underscore',
     'eventemitter': 'vendor/EventEmitter.min'
   }

@@ -25,6 +25,9 @@
     opacity: 0.6;
 }
 
+.list-item-weather-active {
+    background-color: #336C99;
+}
 
 /*
 .list-item-news img {

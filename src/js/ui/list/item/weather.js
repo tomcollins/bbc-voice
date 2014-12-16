@@ -17,13 +17,16 @@ define(['jquery', 'utils/pubsub'],
       return html;
     };
 
-    ListItemWeather.prototype.activate = function() {
+    ListItemWeather.prototype.activate = function($element) {
       var message = 'Weather for ' +this.data.name +'. '
         + this.data.summary;
+      this.$element = $element;
+      this.$element.addClass('list-item-weather-active');
       pubsub.emitEvent('speech:speak', [message]);
     };
 
     ListItemWeather.prototype.deactivate = function() {
+      this.$element.removeClass('list-item-weather-active');
       pubsub.emitEvent('speech:cancel');
     };
 

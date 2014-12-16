@@ -140,7 +140,7 @@ define(['jquery', 'utils/pubsub'],
           _this.$selectedItemElement = $(_this.selectedItemElement);
         },
         itemReady = function() {
-          _this.selectedItem.activate();
+          _this.selectedItem.activate(_this.$selectedItemElement);
           pubsub.emitEvent('list:item:active:complete', [_this.items[index], index]);
         },
         openItem = function($element, callback) {
