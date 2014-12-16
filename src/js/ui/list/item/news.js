@@ -21,6 +21,9 @@ define(['jquery', 'utils/pubsub'],
         + '<h2><a href="' +this.data.shareUrl +'">' +this.data.shortName +'</a></h2>'
         + '<p class="info"><span>' +this.data.collectionName +'</span> | ' +timeAgo +'</p>'
         + '<p class="summary">' +this.data.summary +'</p>';
+        if (hasImage) {
+          html += '<div class="news-item-image"><img src="' +this.data.images.fullsize +'"/></div>';
+        }
         html += '</div></div>';
         
       return html;

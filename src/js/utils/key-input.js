@@ -9,26 +9,28 @@ define(['utils/pubsub'], function(pubsub) {
         command;
 
       if (37 === keyCode) {
-        command = 'back'; //left
+        command = 'voice:back'; //left
       } else if (38 === keyCode) {
-        command = 'previous'; //up
+        command = 'voice:previous'; //up
       } else if (39 === keyCode) {
-        command = 'more'; //right
+        command = 'voice:more'; //right
       } else if (40 === keyCode) {
-        command = 'next'; //down
+        command = 'voice:next'; //down
       } else if (49 === keyCode) {
-        command = 'news'; //1
+        command = 'example:news'; //1
       } else if (50 === keyCode) {
-        command = 'weather'; //2
+        command = 'example:weather'; //2
+      } else if (51 === keyCode) {
+        command = 'example:notFound'; //3
       } else if (32 === keyCode) {
-        command = 'toggleMute'; //space
+        command = 'voice:toggleMute'; //space
       }
       if (command) {
         e.preventDefault();
-        if (command != 'toggleMute') {
+        if (command != 'voice:toggleMute') {
           pubsub.emitEvent('voice:trigger');
         }
-        pubsub.emitEvent('voice:' +command);
+        pubsub.emitEvent(command);
       }
     });
   };
