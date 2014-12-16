@@ -49,7 +49,7 @@ define(
         pubsub.emitEvent(event, []);
         // A more complex route command
       } else {
-        var routeCommand = this.interpreter.interpret(phrase);
+        var routeCommand = this.interpreter.interpret(tokens);
         console.log('TRIGGERING EVENT: ' + routeCommand);
         pubsub.emitEvent('voice:route', routeCommand);
       }

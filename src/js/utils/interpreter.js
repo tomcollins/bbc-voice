@@ -14,7 +14,7 @@ var Interpreter = function () {
     'politics'
   ];
 
-  this.all_words = [this.apps, this.dates,this.locations,this.days];
+  this.all_words = [this.apps,this.dates,this.locations,this.days];
   this.word_list = [].concat.apply([], this.all_words);
 };
 
@@ -57,21 +57,24 @@ Interpreter.prototype.contains_news_topic = function (tokens) {
 };
 
 // show me the weather in cardiff
-Interpreter.prototype.filterTokens = function (tokens) {
-  var toks = [];
+Interpreter.prototype.filter_tokens = function (tokens) {
+  var result = [];
   for (var i=0; i<tokens.length; i++) {
     if (this.is_known_word(tokens[i])) {
-      toks.push(tokens[i]);
+      console.log('pushing token' + tokens[i]);
+      result.push(tokens[i]);
     }
   }
-  return toks;
+  console.log(result);
+  return result;
 };
 
 /**
  * @param { array[string] } tokens
  */
 Interpreter.prototype.interpret = function (tokens) {
-  return this.filterTokens(tokens).join('/');
+  var filtered_tokens = this.filter_tokens(tokens);
+  return filtered_tokens.join('/');
 };
 
 define(['underscore'], function(_) {
