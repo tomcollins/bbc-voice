@@ -42,6 +42,10 @@ define(
 
     if (tokens[0] === 'bbc') {
       tokens = tokens.slice(1);
+
+      // Send a general voice trigger command with all the tokens
+      pubsub.emitEvent('voice:trigger', tokens);
+
       // Simple reserved action phrase like home, next, prev etc
       if (tokens.length == 1 && this.is_navigation_command(phrase)) {
         var event = 'voice:' + phrase;
