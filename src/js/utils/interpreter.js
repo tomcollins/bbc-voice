@@ -52,6 +52,7 @@ var stop_words = [
 'it',
 'its',
 'itself',
+'like',
 'me',
 'more',
 'most',
