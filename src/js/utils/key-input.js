@@ -24,6 +24,8 @@ define(['utils/pubsub'], function(pubsub) {
         command = 'example:notFound'; //3
       } else if (32 === keyCode) {
         command = 'voice:toggleMute'; //space
+      } else if (65 === keyCode) {
+        $('#autoplay').trigger('click');
       }
       if (command) {
         e.preventDefault();

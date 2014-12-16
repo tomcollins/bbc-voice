@@ -16,7 +16,6 @@ define(['utils/pubsub'], function(pubsub) {
     msg.pitch = this.pitch;
     msg.lang  = this.lang;
     msg.onend = function ( ) {
-      console.log('speech complete');
       pubsub.emitEvent('speech:complete');
     };
     return msg;

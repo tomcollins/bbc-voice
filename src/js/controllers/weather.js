@@ -1,8 +1,9 @@
 define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
   function($, pubsub, List, ListItemWeather) {
 
-    var ControllerWeather = function(context) {
+    var ControllerWeather = function(context, autoPlay) {
       var _this = this;
+      this.autoPlay = autoPlay; 
       this.context = context;
       this.locationTerm = context.params.location;
       this.timeTerm = String(context.params.time).toLowerCase();
@@ -104,12 +105,19 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
         _this.list.prev();
       });
       pubsub.addListener('list:item:complete', function() {
+        _this.itemIsComplete = true;
         if (_this.autoPlay) {
+          _this.itemIsComplete = false;
           _this.list.next();
         }
       });
       pubsub.addListener('autoplay:enabled', function() {
-        _this.autoPlay = true;
+        if (!_this.autoPlay) {
+          _this.autoPlay = true;
+          if (_this.itemIsComplete) {
+            _this.list.next();
+          }
+        }
       });
       pubsub.addListener('autoplay:disabled', function() {
         _this.autoPlay = false;

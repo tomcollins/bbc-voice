@@ -8,7 +8,7 @@ define(['jquery', 'utils/pubsub'],
       this.isEnabled = true;
        $('#autoplay').click(function () {
          _this.isEnabled = _this.isEnabled===false ? true : false;
-         $(this).toggleClass('active');
+         $(this).toggleClass('autoplay-enabled');
          $(this).text(_this.isEnabled ? 'Auto Scroll On' : 'Auto Scroll Off');
          pubsub.emitEvent('autoplay:' +(_this.isEnabled ? 'enabled' : 'disabled'));
         });

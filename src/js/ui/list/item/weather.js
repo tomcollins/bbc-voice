@@ -63,7 +63,7 @@ define(['jquery', 'utils/pubsub'],
 
       this.$element = $element;
       
-      pubsub.addListener('speach:complete', function() {
+      pubsub.addListener('speech:complete', function() {
         pubsub.emitEvent('list:item:complete');
       });
       pubsub.emitEvent('speech:speak', [message]);
