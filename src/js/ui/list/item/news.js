@@ -30,7 +30,8 @@ define(['jquery', 'utils/pubsub'],
     };
 
     ListItemNews.prototype.activate = function($element) {
-      var message = '';
+      var _this = this,
+        message = '';
       if (
         !this.topic || 
         (this.topic && this.topic.name && this.topic.name != this.data.collectionName)
@@ -45,11 +46,15 @@ define(['jquery', 'utils/pubsub'],
       pubsub.addListener('speech:complete', function() {
         pubsub.emitEvent('list:item:complete');
       });
+      pubsub.addListener('voice:more', function() {
+        window.location = _this.data.shareUrl;
+      });
       pubsub.emitEvent('speech:speak', [message]);
     };
 
     ListItemNews.prototype.deactivate = function() {
       pubsub.removeEvent('speech:complete');
+      pubsub.removeEvent('voice:more');
       pubsub.emitEvent('speech:cancel');
     };
 
