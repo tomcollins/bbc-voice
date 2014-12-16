@@ -38,13 +38,16 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       if (!this.isShown) {
         callback();
       } else {
-        this.list.hide(function(){
-          _this.list.destroy();
-          _this.$element.empty();
-          callback();
-        });
         this.isShown = false;
-
+        if (this.list) {
+          this.list.hide(function(){
+            _this.list.destroy();
+            _this.$element.empty();
+            callback();
+          });
+        } else {
+          callback();
+        }
       }
     };
 

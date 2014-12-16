@@ -6,6 +6,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       this.context = context;
       this.locationTerm = context.params.location;
       this.timeTerm = String(context.params.time).toLowerCase();
+      this.hintTerm = String(context.params.hint).toLowerCase();
       this.location = undefined;
       this.fetchLocation(this.locationTerm, function(data) {
         if (data.response.content.locations.totalResults > 0) {
@@ -34,12 +35,17 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       if (!this.isShown) {
         callback();
       } else {
-        this.list.hide(function(){
-          _this.list.destroy();
-          _this.$element.empty();
-          callback();
-        });
         this.isShown = false;
+        if (this.list) {
+          this.list.hide(function(){
+            _this.list.destroy();
+            _this.$element.empty();
+            callback();
+          });
+        } else {
+          callback();
+        }
+        
       }
     };
 
@@ -59,16 +65,26 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
 
     ControllerWeather.prototype.render = function($element) {
       var _this = this,
-        startIndex = undefined;
+        matchesTimeTerm,
+        startIndex = false;
       this.list = new List();
+
+      if (_this.timeTerm === 'tomorrow') {
+        startIndex = 1;
+      }
       this.data.weather.forEach(function(data, index) {
         if (index < 10) {
-          _this.list.addItem(new ListItemWeather(data));
+          matchesTimeTerm = false;
           if (_this.timeTerm) {
-            if (!startIndex && String(data.name).toLowerCase() === _this.timeTerm) {
+            if (
+              (startIndex !== false && index === startIndex) ||
+              (startIndex === false && String(data.name).toLowerCase() === _this.timeTerm)
+            ) {
+              matchesTimeTerm = true;
               startIndex = index;
             }
           }
+          _this.list.addItem(new ListItemWeather(data, _this.location, matchesTimeTerm, _this.hintTerm));
         }
       });
       if (!startIndex) {

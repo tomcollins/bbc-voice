@@ -43,10 +43,11 @@ require(['jquery',
 
   var controllers = new Controllers();
 
-  var lastVoiceRoute;
+  var lastVoiceRoute, lastVoiceInput;
 
   pubsub.addListener('voice:route', function(route, input) {
     lastVoiceRoute = route.split('/').join(' ');
+    lastVoiceInput = input;
     page(route);
   });
 
@@ -73,7 +74,7 @@ require(['jquery',
       controllers.setController('weather', context);
     },
     routeNotFound = function(context) {
-      var message = 'Sorry. I do not understand what you mean' + (lastVoiceRoute ? ' by ' + lastVoiceRoute : '');
+      var message = 'Sorry. I do not understand what you mean' + (lastVoiceInput ? ' by ' + lastVoiceInput : '');
       pubsub.emitEvent('voice:trigger');
       pubsub.emitEvent('speech:speak', [message]);
       page('/');
@@ -85,6 +86,7 @@ require(['jquery',
   page('/news/:topic', routeNews);
   page('/weather/:location', routeWeather);
   page('/weather/:location/:time', routeWeather);
+  page('/weather/:location/:time/:hint', routeWeather);
   page('*', routeNotFound);
   page();
 
