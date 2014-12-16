@@ -3,33 +3,44 @@
 var Interpreter = function () {
 
   this.apps      = ['news', 'weather'];
-  this.dates     = ['today', 'tomorrow'];
-  this.days      = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-  this.locations = ['cardiff', 'london'];
 
-  this.news_topics = [
-    'technology',
-    'entertainment',
-    'sport',
-    'politics'
+  this.stop_words = [
+    'the',
+    'show',
+    'about',
+    'when',
+    'what',
+    'me',
+    'tell',
+    'should',
+    'i',
+    'in',
+    'is'
   ];
-
-  this.all_words = [this.apps,this.dates,this.locations,this.days];
-  this.word_list = [].concat.apply([], this.all_words);
-};
-
-/**
- * Check if a word is a known word
- * @return { boolean } is this a known word
- */
-Interpreter.prototype.is_known_word = function (word) {
-  return this.linear_search(this.word_list, word);
 };
 
 /**
  * Check if a sequence xs contains a token x
  */
-Interpreter.prototype.linear_search = function (xs, x) {
+Interpreter.prototype.contains_token = function (xs, x) {
+  for (var i=0; i<xs.length; i++) {
+    if (xs[i] == x) return true;
+  }
+  return false;
+};
+
+/**
+ * Check if a word is a stop i.e junk word
+ * @return { boolean } is this a sto word
+ */
+Interpreter.prototype.is_stop_word = function (word) {
+  return this.contains_token(this.stop_words, word);
+};
+
+/**
+ * Check if a sequence xs contains a token x
+ */
+Interpreter.prototype.contains_token = function (xs, x) {
   for (var i=0; i<xs.length; i++) {
     if (xs[i] == x) return true;
   }
@@ -51,21 +62,20 @@ Interpreter.prototype.union_search = function (xs, ys) {
   return false;
 };
 
-/** Returns true if tokens contains a news topic */
-Interpreter.prototype.contains_news_topic = function (tokens) {
-  return this.union_search(this.news_topics, tokens);
+
+Interpreter.prototype.remove_token = function(tokens, token) {
+  return tokens.filter( function (t) { return t !== token; });
 };
 
-// show me the weather in cardiff
-Interpreter.prototype.filter_tokens = function (tokens) {
+/** Normalize token input by filtering out the crap */
+Interpreter.prototype.filter_stop_words = function (tokens) {
   var result = [];
   for (var i=0; i<tokens.length; i++) {
-    if (this.is_known_word(tokens[i])) {
-      console.log('pushing token' + tokens[i]);
-      result.push(tokens[i]);
+    var token = tokens[i];
+    if (!this.is_stop_word(token)) {
+      result.push(token);
     }
   }
-  console.log(result);
   return result;
 };
 
@@ -73,9 +83,41 @@ Interpreter.prototype.filter_tokens = function (tokens) {
  * @param { array[string] } tokens
  */
 Interpreter.prototype.interpret = function (tokens) {
-  var filtered_tokens = this.filter_tokens(tokens);
-  return filtered_tokens.join('/');
+
+  var normalized_tokens = this.filter_stop_words(tokens);
+
+  // if (this.contains_token(tokens, 'umbrella')) {
+  //   return 'weather/london/umbrella';
+  // }
+
+  // news custom logic. Re-arrange news route to put news first
+  if (this.contains_token(tokens, 'news')) {
+    var news_tokens = this.remove_token(normalized_tokens, 'news');
+    return '/news/' + news_tokens.join('/');
+  }
+
+  // Put weather at the start of the route if pharse === cardiff weather
+  if (this.contains_token(tokens, 'weather')) {
+    var weather_tokens = this.remove_token(normalized_tokens, 'weather');
+    return '/weather/' + weather_tokens.join('/');
+  }
+
+  return '/' + normalized_tokens.join('/');
 };
+
+function tests ( ) {
+  var i = new Interpreter();
+  var a = 'business news';
+  var b = 'show me news about the uk';
+  var c = 'tell me the weather in cardiff';
+  var d = 'what is the weather in london tomorrow';
+  var e = 'news politics';
+  var f = 'show me cardiff weather';
+
+  return [a,b,c,d,e,f].map(function (x) {
+    return i.interpret(x.split(' '));
+  });
+}
 
 define(['underscore'], function(_) {
   return Interpreter;
