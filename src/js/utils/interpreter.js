@@ -225,6 +225,6 @@ function tests ( ) {
   });
 }
 
-// define(['underscore'], function(_) {
-//   return Interpreter;
-// });
+define(['underscore'], function(_) {
+  return Interpreter;
+});
