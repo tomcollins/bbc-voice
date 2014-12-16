@@ -18,17 +18,6 @@
     line-height: 1.5;
 }
 
-
-.list-item-weather h2 {
-
-}
-.list-item-selected .list-item-weather h2 {
-}
-
-.list-item-active .list-item-weather {
-    background-color: #336C99;
-}
-
 .list-item .weather-ambience {
     background-size: cover;
     position: absolute;
@@ -42,12 +31,11 @@
     opacity: 0;
 }
 
-.list-item-weather-active .weather-ambience {
+.list-item-active .weather-ambience {
     opacity: 1;
 }
 
-
-.list-item-weather-active .weather {
+.list-item-active .weather {
     opacity: 1;
 }
 
