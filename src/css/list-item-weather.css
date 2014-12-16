@@ -25,10 +25,6 @@
 .list-item-selected .list-item-weather h2 {
 }
 
-.list-item-active .list-item-weather {
-    background-color: #336C99;
-}
-
 .list-item .weather-ambience {
     background-size: cover;
     position: absolute;

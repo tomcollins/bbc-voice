@@ -11,6 +11,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
           _this.location = data.response.content.locations.locations[0];
           pubsub.emitEvent('weather:location', [_this.location]);
           _this.checkDataState();
+        } else {
+          message = 'I could not find the location ' +_this.locationTerm;
+          pubsub.emitEvent('speech:speak', [message]);
         }
       });
     };
