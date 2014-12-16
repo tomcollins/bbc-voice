@@ -80,12 +80,14 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
         _this.list.setIndex(this.listStartIndex ? this.listStartIndex : 0);
       });
       pubsub.addListener('voice:next', function() {
-        _this.itemIsComplete = true;
-        _this.list.next();
+        if (!_this.list.isTransitioning) {
+          _this.list.next();
+        }
       });
       pubsub.addListener('voice:previous', function() {
-        _this.itemIsComplete = true;
-        _this.list.prev();
+        if (!_this.list.isTransitioning) {
+          _this.list.prev();
+        }
       });
       pubsub.addListener('list:item:complete', function() {
         _this.itemIsComplete = true;

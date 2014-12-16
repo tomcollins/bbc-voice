@@ -135,6 +135,7 @@ define(['jquery', 'utils/pubsub'],
           _this.selectedItem.activate(_this.$selectedItemElement);
           _this.$selectedItemElement.addClass('list-item-active');
           //this.$element.removeClass('list-item-news-active');
+          _this.isTransitioning = false;
           pubsub.emitEvent('list:item:active:complete', [_this.items[index], index]);
         },
         openItem = function($element, callback) {
@@ -171,6 +172,7 @@ define(['jquery', 'utils/pubsub'],
       }
 
       this.index = index;
+      this.isTransitioning = true;
       if (this.$selectedItemElement) {
 
         _this.$selectedItemElement.removeClass('list-item-active');
