@@ -73,7 +73,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
 
     ControllerNews.prototype.fetchData = function(topic, callback) {
       $.ajax({
-        url: 'http://api-newshack.rhcloud.com/news' + (topic ? '?topic=' +topic : ''),
+        url: '//api-newshack.rhcloud.com/news' + (topic ? '?topic=' +topic : ''),
         dataType: 'json',
         success: function(data) {
           callback(data);

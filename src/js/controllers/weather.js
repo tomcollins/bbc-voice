@@ -7,8 +7,8 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
       this.locationTerm = context.params.location;
       this.location = undefined;
       this.fetchLocation(this.locationTerm, function(data) {
-        if (data.response.content.locations.totalResults > 0) {
-          _this.location = data.response.content.locations.locations[0];
+        if (data.location) {
+          _this.location = data.location;
           pubsub.emitEvent('weather:location', [_this.location]);
           _this.checkDataState();
         }
@@ -76,7 +76,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
 
     ControllerWeather.prototype.fetchLocation = function(searchTerm, callback) {
       $.ajax({
-        url: 'http://data.bbc.co.uk/locator-live/locations?apikey=THjGHtMaktxXEZDfcCgAMPe4hxynt5d6&vv=2&order=importance&format=json&s=' +searchTerm,
+        url: '//api-newshack.rhcloud.com/location?search=' + searchTerm,
         dataType: 'json',
         success: function(data) {
           callback(data);
@@ -86,7 +86,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/weather'],
 
     ControllerWeather.prototype.fetchData = function(location, callback) {
       $.ajax({
-        url: 'http://api-newshack.rhcloud.com/weather?location_id=' +location.id,
+        url: '//api-newshack.rhcloud.com/weather?location_id=' +location.id,
         dataType: 'json',
         success: function(data) {
           callback(data);
