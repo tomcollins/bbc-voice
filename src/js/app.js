@@ -17,18 +17,14 @@ require(['jquery',
          'utils/pubsub',
          'controllers',
          'ui/voice-input',
+         'ui/auto-play',
          'utils/inference',
          'utils/voice-input',
          'utils/voice-output',
-         'utils/key-input'], function($, pubsub, Controllers, UIVoiceInput, Inference, VoiceInput, VoiceOutput, KeyInput) {
+         'utils/key-input'], function($, pubsub, Controllers, UIVoiceInput, AutoPlay, Inference, VoiceInput, VoiceOutput, KeyInput) {
 
   var input = new VoiceInput();
   var inf = new Inference();
-  var autoPlay = false;
-
-  $('#auto-play').click(function () {
-    autoPlay = autoPlay===false ? true : false;
-  });
 
   // Listen for voice input and react to the input
   input.listen(function (speech) {
@@ -46,6 +42,7 @@ require(['jquery',
   var keyInput = new KeyInput();
   var uiVoiceInput = new UIVoiceInput();
   var controllers = new Controllers();
+  var autoPlay = new AutoPlay();
   var lastVoiceRoute;
 
   pubsub.addListener('voice:route', function(route, input) {

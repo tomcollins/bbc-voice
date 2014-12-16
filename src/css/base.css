@@ -48,13 +48,16 @@ body a {
   left: 0;
 }
 
-#auto-play {
+#autoplay {
   cursor: pointer;
-  color: #333;
+  color: #999;
   font-weight: bold;
   top: 12px;
   right: 60px;
   position: absolute;
+}
+#autoplay.active {
+  color: #333;
 }
 
 #voice-input {
