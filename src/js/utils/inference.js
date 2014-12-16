@@ -9,7 +9,6 @@ define(
   var Inference = function () {
     this.navigation_commands = ['home', 'next', 'previous', 'more', 'back', 'play'];
     this.interpreter = new Interpreter();
-    this.interpreter.interpret(this.tokenize('what is the weather in cardiff'));
     this.muted = false;
     pubsub.on('voice:toggleMute', this.muteToggle.bind(this));
   };
@@ -58,6 +57,9 @@ define(
    * @phrase { string } a user speech input
    */
   Inference.prototype.react = function (phrase) {
+
+    pubsub.emitEvent('event:trigger');
+
     // Return if we are muted
     if (this.muted) { return; }
     console.log('USER SAID ' + phrase);
