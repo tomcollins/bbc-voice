@@ -77,7 +77,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     Controller.prototype.addEventsAfterRender = function($element) {
       var _this = this;
       pubsub.addListener('list:show:complete', function() {
-        _this.list.setIndex(this.listStartIndex ? this.listStartIndex : 0);
+        _this.list.setIndex(_this.listStartIndex ? _this.listStartIndex : 0);
       });
       pubsub.addListener('voice:next', function() {
         if (!_this.list.isTransitioning) {

@@ -34,7 +34,7 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
     };
 
     ListItemNews.prototype.postActivateHook = function() {
-      var message;
+      var message = '';
       if (
         !this.topic || 
         (this.topic && this.topic.name && this.topic.name != this.data.collectionName)
