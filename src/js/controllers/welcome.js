@@ -29,6 +29,7 @@ define(['jquery', 'utils/pubsub', 'controller'],
       var _this = this;
       
       var html = '<div class="column-wrap welcome">'
+        + '<p>This demo currently requires a recent version of Google Chrome.</p>'
         + '<h2>Try one of these phrases:</h2>'
         + '<ul class=welcome-prompts>'
         + '<li class="index-0"><p>"BBC news"</p></li>'
