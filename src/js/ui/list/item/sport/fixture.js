@@ -24,7 +24,7 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
     ListItemSportFixture.prototype.postActivateHook = function() {
       setTimeout(function(){
         pubsub.emitEvent('list:item:complete');
-      }, 3000);
+      }, 6000);
     };
 
 

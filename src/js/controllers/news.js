@@ -8,7 +8,7 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
       this.topicTerm = context.params.topic;
       this.topic = undefined;
       this.fetchData(this.topicTerm, function(data) {
-        this.validateData(data);
+        _this.validateData(data);
       });
     };
 

@@ -49,29 +49,29 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
     ControllerWeather.prototype.render = function($element) {
       var _this = this,
         matchesTimeTerm,
-        startIndex = false;
+        listStartIndex = false;
       this.list = new List();
 
       if (_this.timeTerm === 'tomorrow') {
-        startIndex = 1;
+        listStartIndex = 1;
       }
       this.data.weather.forEach(function(data, index) {
         if (index < 10) {
           matchesTimeTerm = false;
           if (_this.timeTerm) {
             if (
-              (startIndex !== false && index === startIndex) ||
-              (startIndex === false && String(data.name).toLowerCase() === _this.timeTerm)
+              (listStartIndex !== false && index === listStartIndex) ||
+              (listStartIndex === false && String(data.name).toLowerCase() === _this.timeTerm)
             ) {
               matchesTimeTerm = true;
-              startIndex = index;
+              listStartIndex = index;
             }
           }
           _this.list.addItem(new ListItemWeather(data, _this.location, matchesTimeTerm, _this.hintTerm));
         }
       });
-      if (!startIndex) {
-        startIndex = 0;
+      if (!listStartIndex) {
+        listStartIndex = 0;
       }
       this.listStartIndex = listStartIndex;
 
