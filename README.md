@@ -6,10 +6,11 @@ BBC Voice is an application that lets users explore BBC content quickly and easi
 ## Technical Architecture
 
 + Front End UI
-+ BBC Unity API (bringing together messy BBC API content into simple unified response format)
++ BBC Unity API (bringing together messy BBC API content into simple unified JSON response format)
   - Locator
   - News (Trevor)
   - Travel
+  - Sport
   - Weather
 + Speech inference engine
 
