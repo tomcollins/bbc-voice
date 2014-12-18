@@ -46,6 +46,7 @@ URL Mappings
 
 ### Sport fixtures
 
+```
 /sport/fixtures/:team
 /sport/fixtures/:team/:date
 ```
