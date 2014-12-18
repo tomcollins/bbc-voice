@@ -5,6 +5,8 @@ BBC Voice is an application that lets users explore BBC content quickly and easi
 
 It offers faster access to BBC content that would be possible with the existing formats.
 
+As a product BBC voice will be available to users on mobile and desktop.
+
 ## Technical Architecture
 
 + Front End UI
