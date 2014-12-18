@@ -8,12 +8,16 @@ URL Mappings
 
 ## NEWS
 
+> BBC show me business news
+
 ```
 /news
 /news/:subject
 ```
 
 ## WEATHER
+
+> BBC show me the weather in London on Friday
 
 ```
 /weather -> show me the weather
@@ -22,6 +26,8 @@ URL Mappings
 ```
 
 ## TRAVEL
+
+> BBC tell me about traffic in London
 
 ```
 /travel (most urgent traffic info) -> show me traffic information
@@ -32,15 +38,14 @@ URL Mappings
 
 ## SPORT
 
-"BBC show me sport"
-```
+> BBC show me Cardiff City fixture
 
+```
 /sport
 ```
 
-"BBC show me Cardiff City fixtures"
+### Sport fixtures
 
-```
 /sport/fixtures/:team
 /sport/fixtures/:team/:date
 ```
