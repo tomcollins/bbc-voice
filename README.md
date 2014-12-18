@@ -38,7 +38,7 @@ URL Mappings
 
 ## SPORT
 
-> BBC show me Cardiff City fixture
+> BBC show me Cardiff City fixtures
 
 ```
 /sport
