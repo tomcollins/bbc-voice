@@ -1,3 +1,5 @@
+/*global define moment */
+
 define(['jquery', 'utils/pubsub', 'ui/list/item'],
   function($, pubsub, ListItem) {
 
@@ -14,9 +16,9 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
 
     ListItemWeather.prototype.getHtml = function() {
       var html,
-        weather,
-        ambience
-        time = moment(this.data.date).format('ll');
+          weather,
+          ambience,
+          time = moment(this.data.date).format('ll');
 
       ambience = '<div class="weather-ambience weather-ambience-' + this.data.type.id + '"></div>';
 
@@ -64,8 +66,7 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
         message = 'Weather for ' +this.data.name +'. ' + this.data.summary;
       }
       pubsub.emitEvent('speech:speak', [message]);
-    };    
+    };
 
     return ListItemWeather;
-
 });

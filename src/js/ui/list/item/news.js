@@ -1,9 +1,10 @@
+/*global define moment */
+
 define(['jquery', 'utils/pubsub', 'ui/list/item'],
   function($, pubsub, ListItem) {
 
     var ListItemNews = function(data, topic) {
       ListItem.call(this, data);
-
       this.topic = topic;
     };
 
@@ -39,10 +40,10 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
         !this.topic ||
         (this.topic && this.topic.name && this.topic.name != this.data.collectionName)
       ) {
-//        message = 'From ' +this.data.collectionName +' ';
+        message = 'From ' +this.data.collectionName +' ';
       }
-//      message += moment(this.data.lastUpdated).fromNow() +'. ' + this.data.name;
-//      pubsub.emitEvent('speech:speak', [message]);
+      message += moment(this.data.lastUpdated).fromNow() +'. ' + this.data.name;
+      pubsub.emitEvent('speech:speak', [message]);
 
       pubsub.addListener('voice:more', function() {
         window.location = _this.data.shareUrl;
@@ -50,5 +51,4 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
     };
 
     return ListItemNews;
-
 });
