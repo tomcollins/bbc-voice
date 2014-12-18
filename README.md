@@ -3,7 +3,7 @@ BBC Voice
 
 BBC Voice is an application that lets users explore BBC content quickly and easily through voice commands.
 
-It offers faster access to BBC content that would be possible with the existing formats.
+It offers faster and more intimate access to BBC content that would be possible with the existing/traditional formats.
 
 As a product BBC voice will be available to users on mobile and desktop.
 
