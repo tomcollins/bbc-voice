@@ -44,12 +44,7 @@ URL Mappings
 /sport
 ```
 
-### Sport fixtures
-
-```
-/sport/fixtures/:team
-/sport/fixtures/:team/:date
-```
+> BBC who won the Grand Prix on Sunday
 
 ### Sport results
 
@@ -60,6 +55,8 @@ URL Mappings
 
 ### Sport fixtures
 
+> BBC when is the next england game
+
 ```
 /sport/fixtures/:team
 /sport/fixtures/:team/:date
@@ -68,6 +65,8 @@ URL Mappings
 ```
 
 ### Sport tables
+
+> BBC Rugby Union
 
 ```
 /sport/table/championship -> BBC: champions league
