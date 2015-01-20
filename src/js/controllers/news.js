@@ -15,6 +15,14 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
     ControllerNews.prototype = Object.create(Controller.prototype);
     ControllerNews.prototype.constructor = ControllerNews;
 
+    ControllerNews.prototype.getTitle = function() {
+      var title = 'News';
+      if (this.topic) {
+        title += ' - ' +this.topic.name;
+      }
+      return title;
+    };
+
     ControllerNews.prototype.validateData = function(data) {
       var message;
       if (this.topicTerm) {

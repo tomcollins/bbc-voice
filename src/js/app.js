@@ -59,6 +59,7 @@ require(['jquery',
   pubsub.addListener('example:weather', function() {
     page('/weather/cardiff');
   });
+  /*
   pubsub.addListener('example:sport:fixtures', function() {
     page('/sport/fixtures/premier');
   });
@@ -68,6 +69,7 @@ require(['jquery',
   pubsub.addListener('example:travel', function() {
     page('/travel');
   });
+  */
   pubsub.addListener('example:notFound', function() {
     page('/not/found/example');
   });

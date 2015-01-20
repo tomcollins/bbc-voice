@@ -14,7 +14,10 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
         if (data.location) {
           _this.location = data.location;
           pubsub.emitEvent('weather:location', [_this.location]);
-          _this.checkDataState();
+          _this.fetchData(_this.location, function(data){
+            _this.data = data;
+            _this.checkDataState();
+          });
         } else {
           message = 'I could not find the location ' +_this.locationTerm;
           pubsub.emitEvent('speech:speak', [message]);
@@ -22,33 +25,12 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
       });
     };
 
-    ControllerWeather.prototype.getTitle = function() {
-      var locationName = (this.location && this.location.name) ? this.location.name : this.context.params.locationTerm;
-      return 'Weather - ' +locationName;
-    };
-
     ControllerWeather.prototype = Object.create(Controller.prototype);
     ControllerWeather.prototype.constructor = ControllerWeather;
 
-    ControllerWeather.prototype.checkDataState = function() {
-      var _this = this;
-
-      // this is most likely not necessary and can probably be removed
-      // it was added quickly while trying to fix the double show() bug
-      if (this.list) {
-        return;
-      }
-
-      if (this.$element && this.location) {
-        if (this.data) {
-          this.render();
-        } else {
-          this.fetchData(this.location, function(data){
-            _this.data = data;
-            _this.render(_this.$element);
-          });
-        }
-      }
+    ControllerWeather.prototype.getTitle = function() {
+      var locationName = (this.location && this.location.name) ? this.location.name : this.context.params.locationTerm;
+      return 'Weather - ' +locationName;
     };
 
     ControllerWeather.prototype.render = function($element) {

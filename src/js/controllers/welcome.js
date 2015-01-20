@@ -4,6 +4,7 @@ define(['jquery', 'utils/pubsub', 'controller'],
     var ControllerWelcome = function(context) {
       Controller.call(this, context);
       this.hasData = false;
+      this.checkDataState();
     };
 
     ControllerWelcome.prototype = Object.create(Controller.prototype);

@@ -12,7 +12,6 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
 
     Controller.prototype.show = function($element) {
       var _this = this;
-      console.log('show');
       this.$element = $element;
       this.isShown = true;
       this.checkDataState();
@@ -58,8 +57,6 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       ) {
         this.hasEmittedReadyEvent = true;
         pubsub.emitEvent('controller:ready', [this.getTitle()]);
-      } else {
-        return;
       }
       if (this.$element) {
         this.render(this.$element);
@@ -87,7 +84,6 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     Controller.prototype.addEventsAfterRender = function($element) {
       var _this = this;
       pubsub.addListener('list:show:complete', function() {
-        console.log('list:show:complete', _this.listStartIndex, _this.list);
         _this.list.setIndex(_this.listStartIndex ? _this.listStartIndex : 0);
       });
       pubsub.addListener('voice:next', function() {

@@ -106,7 +106,6 @@ define([
 
       pubsub.removeEvent('controller:ready');
       pubsub.addListener('controller:ready', function(title) {
-        console.log('controller:ready', title);
         _this.showHeader(title);
         _this.showController();
       });
@@ -114,40 +113,6 @@ define([
       this.$wrap.addClass('page-' +this.controllerKey);
       this.controller = new moduleClass(this.context);
 
-/*
-      if ('weather' === controllerKey) {
-        pubsub.removeEvent('weather:location');
-        pubsub.addListener('weather:location', function(location) {
-          var name = location.name;
-          if (location.name !== location.container) {
-            name += ', ' +location.container;
-          }
-          pubsub.emitEvent('speech:speak', ['Weather for ' +location.name]);
-          _this.showHeader(module.label +' - ' +name);
-          _this.showController();
-        });
-      } else if ('news' === controllerKey && context.params.topic) {
-        pubsub.removeEvent('news:topic');
-        pubsub.addListener('news:topic', function(topic) {
-          var topicName = (topic && topic.name) ? topic.name : context.params.topic;
-          pubsub.emitEvent('speech:speak', ['News about ' +topicName]);
-          _this.showHeader(module.label +' - ' +topicName);
-          _this.showController();
-        });
-      } else if ('sport' === controllerKey && context.params.league) {
-        pubsub.removeEvent('sport:league');
-        pubsub.addListener('sport:league', function(league) {
-          var leagueName = (league && league.name) ? league.name : context.params.league;
-          pubsub.emitEvent('speech:speak', [leagueName +' fixtures']);
-          _this.showHeader(module.label +' - ' +leagueName);
-          _this.showController();
-        });
-      } else {
-        pubsub.emitEvent('speech:speak', [module.label]);
-        this.showHeader(module.label);
-        this.showController();
-      }
-*/
     };
 
     return Controllers;
