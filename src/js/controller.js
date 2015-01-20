@@ -1,11 +1,11 @@
 define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, List, ListItemNews) {
 
-    var Controller = function(context, autoPlay) {
+    var Controller = function(context) {
       var _this = this,
         message;
-      this.autoPlay = autoPlay; 
       this.context = context;
+      this.autoPlay = this.context.params.autoPlay; 
       this.hasData = true;
       this.data = undefined;
     };
@@ -14,11 +14,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       var _this = this;
       this.$element = $element;
       this.isShown = true;
-      if (this.hasData) {
-        this.checkDataState();
-      } else {
-        this.render($element);
-      }
+      this.checkDataState();
     };
 
     Controller.prototype.hide = function(callback) {
@@ -49,9 +45,20 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       pubsub.removeEvent('autoplay:disabled');
     };
 
+    Controller.prototype.getTitle = function() {
+      return 'Module Title';
+    };
+
     Controller.prototype.checkDataState = function() {
       var _this = this;
-      if (this.$element && this.data) {
+      if (
+        !this.hasEmittedReadyEvent && 
+        (!this.hasData || (this.hasData && this.data))
+      ) {
+        this.hasEmittedReadyEvent = true;
+        pubsub.emitEvent('controller:ready', [this.getTitle()]);
+      }
+      if (this.$element) {
         this.render(this.$element);
       }
     };

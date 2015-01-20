@@ -21,11 +21,13 @@ define(['utils/pubsub'], function(pubsub) {
       } else if (50 === keyCode) {
         command = 'example:weather'; //2
       } else if (51 === keyCode) {
-        command = 'example:sport'; //3
+        command = 'example:sport:fixtures'; //3
       } else if (52 === keyCode) {
-        command = 'example:travel'; //4
+        command = 'example:sport:tables'; //4
       } else if (53 === keyCode) {
-        command = 'example:notFound'; //5
+        command = 'example:travel'; //5
+      } else if (54 === keyCode) {
+        command = 'example:notFound'; //6
       } else if (32 === keyCode) {
         command = 'voice:toggleMute'; //space
       } else if (65 === keyCode) {

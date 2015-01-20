@@ -1,9 +1,9 @@
 define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, Controller, List, ListItemNews) {
 
-    var ControllerNews = function(context, autoPlay) {
+    var ControllerNews = function(context) {
       var _this = this;
-      Controller.call(this, context, autoPlay);
+      Controller.call(this, context);
 
       this.topicTerm = context.params.topic;
       this.topic = undefined;
@@ -14,6 +14,14 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
 
     ControllerNews.prototype = Object.create(Controller.prototype);
     ControllerNews.prototype.constructor = ControllerNews;
+
+    ControllerNews.prototype.getTitle = function() {
+      var title = 'News';
+      if (this.topic) {
+        title += ' - ' +this.topic.name;
+      }
+      return title;
+    };
 
     ControllerNews.prototype.validateData = function(data) {
       var message;

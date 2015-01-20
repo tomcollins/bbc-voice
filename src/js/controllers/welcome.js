@@ -1,13 +1,18 @@
 define(['jquery', 'utils/pubsub', 'controller'],
   function($, pubsub, Controller) {
 
-    var ControllerWelcome = function(context, autoPlay) {
-      Controller.call(this, context, autoPlay);
+    var ControllerWelcome = function(context) {
+      Controller.call(this, context);
       this.hasData = false;
+      this.checkDataState();
     };
 
     ControllerWelcome.prototype = Object.create(Controller.prototype);
     ControllerWelcome.prototype.constructor = ControllerWelcome;
+
+    ControllerWelcome.prototype.getTitle = function() {
+      return 'BBC Voice';
+    };
 
     ControllerWelcome.prototype.hide = function(callback) {
       var _this = this;

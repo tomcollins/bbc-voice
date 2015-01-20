@@ -29,6 +29,7 @@ define(['utils/pubsub'], function(pubsub) {
    */
   VoiceOutput.prototype.say = function (speech) {
     this.cancel();
+    pubsub.emitEvent('speech:start');
     speechSynthesis.speak(this.prepareSpeech(speech));
   };
 

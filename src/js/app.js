@@ -59,32 +59,43 @@ require(['jquery',
   pubsub.addListener('example:weather', function() {
     page('/weather/cardiff');
   });
-  pubsub.addListener('example:sport', function() {
+  /*
+  pubsub.addListener('example:sport:fixtures', function() {
     page('/sport/fixtures/premier');
+  });
+  pubsub.addListener('example:sport:tables', function() {
+    page('/sport/tables/premier');
   });
   pubsub.addListener('example:travel', function() {
     page('/travel');
   });
+  */
   pubsub.addListener('example:notFound', function() {
     page('/not/found/example');
   });
 
   // routes
 
+  function prepareContext(context) {
+    context.params.voiceRoute = lastVoiceRoute;
+    context.params.voiceInput = lastVoiceInput;
+    context.params.autoPlay = autoPlay.isEnabled;
+    return context;
+  };
   var routeIndex = function(context) {
-    controllers.setController('welcome', context, autoPlay.isEnabled);
+    controllers.setController('welcome', prepareContext(context));
     },
     routeNews = function(context) {
-      controllers.setController('news', context, autoPlay.isEnabled);
+      controllers.setController('news', prepareContext(context));
     },
     routeWeather = function(context) {
-      controllers.setController('weather', context, autoPlay.isEnabled);
+      controllers.setController('weather', prepareContext(context));
     },
     routeSport = function(context) {
-      controllers.setController('sport', context, autoPlay.isEnabled);
+      controllers.setController('sport', prepareContext(context));
     },
     routeTravel = function(context) {
-      controllers.setController('travel', context, autoPlay.isEnabled);
+      controllers.setController('travel', prepareContext(context));
     },
     routeNotFound = function(context) {
       var message = 'Sorry. I do not understand what you mean' + (lastVoiceInput ? ' by ' + lastVoiceInput : '');
@@ -100,7 +111,7 @@ require(['jquery',
   page('/weather/:location', routeWeather);
   page('/weather/:location/:time', routeWeather);
   page('/weather/:location/:time/:hint', routeWeather);
-  page('/sport/fixtures/:league', routeSport);
+  page('/sport/:action/:id', routeSport);
   page('/travel', routeTravel);
   page('*', routeNotFound);
   page();

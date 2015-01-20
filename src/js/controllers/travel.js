@@ -1,8 +1,8 @@
 define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/sport/fixture'],
   function($, pubsub, Controller, List, ListItemSportFixture) {
 
-    var ControllerTravel = function(context, autoPlay) {
-      Controller.call(this, context, autoPlay);
+    var ControllerTravel = function(context) {
+      Controller.call(this, context);
       this.hasData = false;
     };
 
