@@ -1,9 +1,9 @@
 define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
   function($, pubsub, Controller, List, ListItemNews) {
 
-    var ControllerNews = function(context, autoPlay) {
+    var ControllerNews = function(context) {
       var _this = this;
-      Controller.call(this, context, autoPlay);
+      Controller.call(this, context);
 
       this.topicTerm = context.params.topic;
       this.topic = undefined;

@@ -1,7 +1,25 @@
 /*global define */
 
-define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'controllers/sport', 'controllers/travel', 'controllers/welcome'],
-  function($, pubsub, ControllerNews, ControllerWeather, ControllerSport, ControllerTravel, ControllerWelcome) {
+define([
+    'jquery', 
+    'utils/pubsub', 
+    'controllers/news', 
+    'controllers/weather', 
+    'controllers/sport/fixtures', 
+    'controllers/sport/tables', 
+    'controllers/travel', 
+    'controllers/welcome'
+  ],
+  function(
+    $, 
+    pubsub, 
+    ControllerNews, 
+    ControllerWeather, 
+    ControllerSportFixtures, 
+    ControllerSportTables, 
+    ControllerTravel, 
+    ControllerWelcome
+  ) {
 
     var Controllers = function() {
       this.currentController = undefined;
@@ -16,7 +34,10 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
         },
         sport: {
           label: 'Sport',
-          class: ControllerSport
+          class: {
+            fixtures: ControllerSportFixtures,
+            tables: ControllerSportTables
+          }
         },
         travel: {
           label: 'Travel',
@@ -50,26 +71,26 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
       }, 500);
     };
 
-    Controllers.prototype.setController = function(controllerKey, context, autoPlay) {
+    Controllers.prototype.setController = function(controllerKey, context) {
       var _this = this;
-
       pubsub.emitEvent('speech:cancel');
 
       if (this.controller) {
         this.controller.hide(function(){
           _this.hideHeader();
           setTimeout(function(){
-            _this.changeController(controllerKey, context, autoPlay);
+            _this.changeController(controllerKey, context);
           }, 500);
         });
       } else {
-        this.changeController(controllerKey, context, autoPlay);
+        this.changeController(controllerKey, context);
       }
     };
 
-    Controllers.prototype.changeController = function(controllerKey, context, autoPlay) {
+    Controllers.prototype.changeController = function(controllerKey, context) {
       var _this = this,
-        module = this.modules[controllerKey];
+        module = this.modules[controllerKey],
+        moduleClass;
 
       if (this.controllerKey) {
         this.$wrap.removeClass('page-' +this.controllerKey);
@@ -77,9 +98,23 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
 
       this.context = context;
       this.controllerKey = controllerKey;
-      this.controller = new module.class(this.context, autoPlay);
-      this.$wrap.addClass('page-' +this.controllerKey);
+      if (typeof module.class === 'object') {
+        moduleClass = module.class[context.params.action];
+      } else {
+        moduleClass = module.class;
+      }
 
+      pubsub.removeEvent('controller:ready');
+      pubsub.addListener('controller:ready', function(title) {
+        console.log('controller:ready', title);
+        _this.showHeader(title);
+        _this.showController();
+      });
+
+      this.$wrap.addClass('page-' +this.controllerKey);
+      this.controller = new moduleClass(this.context);
+
+/*
       if ('weather' === controllerKey) {
         pubsub.removeEvent('weather:location');
         pubsub.addListener('weather:location', function(location) {
@@ -112,6 +147,7 @@ define(['jquery', 'utils/pubsub', 'controllers/news', 'controllers/weather', 'co
         this.showHeader(module.label);
         this.showController();
       }
+*/
     };
 
     return Controllers;

@@ -46,9 +46,11 @@ define(['jquery', 'utils/pubsub', 'ui/list/item'],
         + this.data.summary +'.';
       pubsub.emitEvent('speech:speak', [message]);
 
+      /*
       pubsub.addListener('voice:more', function() {
         window.location = _this.data.shareUrl;
       });
+      */
     };
 
     return ListItemNews;

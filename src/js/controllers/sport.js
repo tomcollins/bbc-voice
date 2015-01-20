@@ -1,14 +1,9 @@
-define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/sport/fixture'],
-  function($, pubsub, Controller, List, ListItemSportFixture) {
+define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/sport/fixture', 'ui/list/item/sport/table'],
+  function($, pubsub, Controller, List, ListItemSportFixture, ListItemSportTable) {
 
-    var ControllerSport = function(context, autoPlay) {
+    var ControllerSport = function(context) {
       var _this = this;
-      Controller.call(this, context, autoPlay)
-
-      this.leagueTerm = context.params.league;
-      this.fetchData(this.leagueTerm, function(data) {
-        _this.validateData(data);
-      });
+      Controller.call(this, context)
     };
 
     ControllerSport.prototype = Object.create(Controller.prototype);
@@ -31,32 +26,15 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/sport/f
       clearTimeout(this.showTimeoutId);
     }
 
-    ControllerSport.prototype.validateData = function(data) {
-      var message;
-      if (this.leagueTerm) {
-        if (data.league && data.league.id) {
-          this.league = data.league;
-        } else {
-          message = 'I could not find any fixtures for ' +this.leagueTerm;
-          pubsub.emitEvent('speech:speak', [message]);
-          return;
-        }
-      }
-      if (data.fixtures.length > 0) {
-        this.data = data.fixtures;
-        this.checkDataState();
-        if (this.leagueTerm) {
-          pubsub.emitEvent('sport:league', [this.league]);
-        }
-      }
+    ControllerSport.prototype.validateData = function(data, messageId, messageType) {
     };
 
     ControllerSport.prototype.renderListItem = function(data) {
-      this.list.addItem(new ListItemSportFixture(data, this.league));
+      
     }
 
-    ControllerSport.prototype.fetchData = function(league, callback) {
-      Controller.prototype.fetchData.call(this, '/json/sport/fixtures/' + league +'.json', callback);
+    ControllerSport.prototype.fetchData = function(action, id, callback) {
+      Controller.prototype.fetchData.call(this, '/json/sport/' +action +'/' + id +'.json', callback);
     };
 
     return ControllerSport;

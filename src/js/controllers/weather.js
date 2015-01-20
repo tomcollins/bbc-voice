@@ -1,9 +1,9 @@
 define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather'],
   function($, pubsub, Controller, List, ListItemWeather) {
 
-    var ControllerWeather = function(context, autoPlay) {
+    var ControllerWeather = function(context) {
       var _this = this;
-      Controller.call(this, context, autoPlay);
+      Controller.call(this, context);
 
       this.locationTerm = context.params.location;
       this.timeTerm = String(context.params.time).toLowerCase();
@@ -20,6 +20,11 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
           pubsub.emitEvent('speech:speak', [message]);
         }
       });
+    };
+
+    ControllerWeather.prototype.getTitle = function() {
+      var locationName = (this.location && this.location.name) ? this.location.name : this.context.params.locationTerm;
+      return 'Weather - ' +locationName;
     };
 
     ControllerWeather.prototype = Object.create(Controller.prototype);
