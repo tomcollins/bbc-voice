@@ -124,7 +124,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
           callback(data);
         },
         error: function() {
-          pubsub.emitEvent('error', ['http']);
+          pubsub.emitEvent('error:http');
         }
       });
     };

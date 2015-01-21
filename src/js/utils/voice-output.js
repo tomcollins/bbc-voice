@@ -7,11 +7,16 @@ define(['utils/pubsub'], function(pubsub) {
     this.rate = 1;
     this.pitch = 1.5;
     this.lang = 'en-GB';
+    this.isSupported = (undefined !== window.SpeechSynthesisUtterance);
    };
 
   VoiceOutput.prototype.prepareSpeech = function (speech) {
-    var msg = new SpeechSynthesisUtterance(speech);
-    var voices = speechSynthesis.getVoices();
+    var msg, voices;
+    if (!this.isSupported) {
+      return;
+    }
+    msg = new SpeechSynthesisUtterance(speech);
+    voices = speechSynthesis.getVoices();
     msg.rate  = this.rate;
     msg.pitch = this.pitch;
     msg.lang  = this.lang;
@@ -28,6 +33,9 @@ define(['utils/pubsub'], function(pubsub) {
    * voice.say('Hello world');
    */
   VoiceOutput.prototype.say = function (speech) {
+    if (!this.isSupported) {
+      return;
+    }
     this.cancel();
     pubsub.emitEvent('speech:start');
     speechSynthesis.speak(this.prepareSpeech(speech));
@@ -40,6 +48,9 @@ define(['utils/pubsub'], function(pubsub) {
    * voice.say('Hello world');
    */
   VoiceOutput.prototype.cancel = function (speech) {
+    if (!this.isSupported) {
+      return;
+    }
     speechSynthesis.cancel();
   };
 

@@ -3,7 +3,8 @@ define(['jquery', 'utils/pubsub', 'controller'],
 
     var ControllerError = function(context) {
       Controller.call(this, context);
-      this.errorType = context.params.type;
+      this.errorType = context.params.errorType;
+      this.errorData = context.params.errorData;
       this.hasData = false;
       this.checkDataState();
     };
@@ -33,7 +34,7 @@ define(['jquery', 'utils/pubsub', 'controller'],
       var html = '<div class="column-wrap welcome">';
 
       if ('voice' === this.errorType) {
-        html += '<p class="fade index-0">Sorry we did not understand that command.</p>'
+        html += '<p class="fade index-0">Sorry we did not understand the command <strong>"' +this.errorData +'"</strong>.</p>'
         + '<p class="fade index-1">Please try again.</p>';
       } else {
         html += '<p class="fade index-0">Sorry we experienced a technical problem.</p>'

@@ -28,17 +28,24 @@ define(['jquery', 'utils/pubsub', 'controller'],
 
     ControllerMicrophone.prototype.render = function($element) {
       var _this = this;
-      
-      var html = '<div class="column-wrap welcome">'
-        + '<p class="fade index-0">Please ensure that sound is enabled.</p>'
+
+      var html = '<div class="column-wrap welcome">';
+
+      if (window.webkitSpeechRecognition && window.SpeechSynthesisUtterance) {
+        html += '<p class="fade index-0">Please ensure that sound is enabled.</p>'
         + '<p class="fade index-1">Please <strong>allow</strong> access to your microphone (above).</p>'
         + '<p class="fade index-2"><img src="/img/microphone_access.png"/></p>'
-        + '</div>';
-        $element.html(html);
+      } else {
+        html += '<p class="fade index-0">Sorry your browser is not currently supported.</p>'
+        + '<p class="fade index-1">This demo requires a desktop version of Google Chrome.</p>'
+      }
 
-        setTimeout(function(){
-          $element.find('.welcome').addClass('welcome-active');
-        });
+      html += '</div>';
+      $element.html(html);
+
+      setTimeout(function(){
+        $element.find('.welcome').addClass('welcome-active');
+      });
     };
 
     return ControllerMicrophone;

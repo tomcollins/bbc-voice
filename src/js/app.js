@@ -84,12 +84,11 @@ require(['jquery',
   pubsub.addListener('restart', function() {
     page('/');
   });
-  pubsub.addListener('error', function(type) {
-    var route = '/error';
-    if (type) {
-      route += '/' +type;
-    }
-    page(route);
+  pubsub.addListener('error:http', function() {
+    page('/error/http');
+  });
+  pubsub.addListener('error:voice', function(voiceInputText) {
+    page('/error/voice/' +voiceInputText);
   });
 
   // routes
@@ -145,8 +144,8 @@ require(['jquery',
   page('/weather/:location/:time/:hint', routeWeather);
   page('/sport/:action/:id', routeSport);
   page('/travel', routeTravel);
-  page('/error', routeError);
-  page('/error/:type', routeError);
+  page('/error/:errorType', routeError);
+  page('/error/:errorType/:errorData', routeError);
   page('*', routeNotFound);
   page();
 

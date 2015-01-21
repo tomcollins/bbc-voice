@@ -5,6 +5,7 @@ define(['utils/pubsub'], function(pubsub) {
 
   var VoiceInput = function () {
     this.lang = 'en-GB';
+    this.isSupported = (undefined !== window.webkitSpeechRecognition);
   };
 
   /**
@@ -19,6 +20,9 @@ define(['utils/pubsub'], function(pubsub) {
    */
   VoiceInput.prototype.listen = function (callback) {
     var _this = this;
+    if (!this.isSupported) {
+      return;
+    }
     this.recognition = new webkitSpeechRecognition();
     this.recognition.continuous     = true;
     this.recognition.interimResults = true;

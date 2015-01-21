@@ -82,8 +82,8 @@ define(
       }
     } else {
       // The phrase did not start with BBC so redirect to the error page
-      if (window.console) { console.log('Error. Voice command must start with BBC'); };
-      pubsub.emitEvent('error', ["voice", phrase]);
+      //if (window.console) { console.log('Error. Voice command must start with BBC'); };
+      pubsub.emitEvent('error:voice', [phrase]);
     }
   };
 
