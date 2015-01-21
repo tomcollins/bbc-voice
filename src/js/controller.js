@@ -5,7 +5,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       var _this = this,
         message;
       this.context = context;
-      this.autoPlay = this.context.params.autoPlay; 
+      this.autoPlay = this.context.params.autoPlay;
       this.hasData = true;
       this.data = undefined;
     };
@@ -20,7 +20,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     Controller.prototype.hide = function(callback) {
       var _this = this;
       this.removePubSubEvents();
-      
+
       if (!this.isShown) {
         callback();
       } else {
@@ -52,7 +52,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     Controller.prototype.checkDataState = function() {
       var _this = this;
       if (
-        !this.hasEmittedReadyEvent && 
+        !this.hasEmittedReadyEvent &&
         (!this.hasData || (this.hasData && this.data))
       ) {
         this.hasEmittedReadyEvent = true;
@@ -79,7 +79,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     };
 
     Controller.prototype.renderListItem = function(data) {
-    }
+    };
 
     Controller.prototype.addEventsAfterRender = function($element) {
       var _this = this;

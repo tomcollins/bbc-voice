@@ -13,7 +13,7 @@ define(['jquery', 'utils/pubsub', 'controller'],
     ControllerWelcome.prototype.hide = function(callback) {
       var _this = this;
       this.removePubSubEvents();
-      
+
       if (!this.isShown) {
         callback();
       } else {
@@ -27,8 +27,9 @@ define(['jquery', 'utils/pubsub', 'controller'],
     };
 
     ControllerWelcome.prototype.render = function($element) {
+
       var _this = this;
-      
+
       var html = '<div class="column-wrap welcome">'
         + '<p>This demo currently requires a recent version of Google Chrome.</p>'
         + '<h2>Try one of these phrases:</h2>'
@@ -41,6 +42,7 @@ define(['jquery', 'utils/pubsub', 'controller'],
         + '<li class="index-5"><p>"BBC do i need an umbrella in Cardiff tomorrow"</p></li>'
         + '</ul>'
         + '</div>';
+
         $element.html(html);
 
         setTimeout(function(){

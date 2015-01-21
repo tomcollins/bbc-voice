@@ -45,7 +45,7 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
 
     ControllerNews.prototype.renderListItem = function(data) {
       this.list.addItem(new ListItemNews(data, this.topic));
-    }
+    };
 
     ControllerNews.prototype.fetchData = function(topic, callback) {
       Controller.prototype.fetchData.call(this, '//api-newshack.rhcloud.com/news' + (topic ? '?topic=' +topic : ''), callback);

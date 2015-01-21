@@ -3,7 +3,7 @@ define(['jquery', 'utils/pubsub', 'controllers/sport', 'ui/list', 'ui/list/item/
 
     var ControllerSportFixtures = function(context) {
       var _this = this;
-      ControllerSport.call(this, context)
+      ControllerSport.call(this, context);
 
       this.leagueTerm = context.params.id;
       this.fetchData('fixtures', this.leagueTerm, function(data) {
