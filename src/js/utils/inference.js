@@ -80,6 +80,10 @@ define(
         //console.log('TRIGGERING EVENT: ' + routeCommand);
         pubsub.emitEvent('voice:route', [routeCommand]);
       }
+    } else {
+
+      // The phrase did not start with BBC so redirect to the error page
+      pubsub.emitEvent('error:voice', [phrase]);
     }
   };
 
