@@ -57,6 +57,13 @@ require(['jquery',
     page(route);
   });
 
+  pubsub.addListener('weather:unknownLocation', function() {
+    page('/');
+  });
+  pubsub.addListener('news:unknownTopic', function() {
+    page('/');
+  });
+
   pubsub.addListener('example:news', function() {
     page('/news');
   });

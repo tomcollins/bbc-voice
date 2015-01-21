@@ -10,6 +10,17 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
       this.data = undefined;
     };
 
+    Controller.prototype.showLoadingMessage = function() {
+      $('#module-content').append('<div id="loading"><img src="/img/ajax-loader.gif"/></div>');
+      setTimeout(function(){
+        $('#loading').addClass('active');
+      }, 1000);
+    };
+
+    Controller.prototype.hideLoadingMessage = function() {
+      $('#loading').remove();
+    };
+
     Controller.prototype.show = function($element) {
       var _this = this;
       this.$element = $element;
@@ -51,6 +62,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
 
     Controller.prototype.checkDataState = function() {
       var _this = this;
+      if (this.data) {
+        this.hideLoadingMessage();
+      }
       if (
         !this.hasEmittedReadyEvent &&
         (!this.hasData || (this.hasData && this.data))

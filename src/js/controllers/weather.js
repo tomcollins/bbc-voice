@@ -10,6 +10,8 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
       this.hintTerm = String(context.params.hint).toLowerCase();
       this.location = undefined;
 
+      this.showLoadingMessage();
+
       this.fetchLocation(this.locationTerm, function(data) {
         if (data.location) {
           _this.location = data.location;
@@ -21,6 +23,10 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
         } else {
           message = 'I could not find the location ' +_this.locationTerm;
           pubsub.emitEvent('speech:speak', [message]);
+          setTimeout(function(){
+            _this.hideLoadingMessage();
+            pubsub.emitEvent('weather:unknownLocation');
+          }, 4000);
         }
       });
     };
@@ -37,6 +43,7 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/weather
       var _this = this,
         matchesTimeTerm,
         listStartIndex = false;
+
       this.list = new List();
 
       if (_this.timeTerm === 'tomorrow') {

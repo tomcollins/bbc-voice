@@ -5,6 +5,8 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
       var _this = this;
       Controller.call(this, context);
 
+      this.showLoadingMessage();
+
       this.topicTerm = context.params.topic;
       this.topic = undefined;
       this.fetchData(this.topicTerm, function(data) {
@@ -24,6 +26,7 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
     };
 
     ControllerNews.prototype.validateData = function(data) {
+      var _this = this;
       var message;
       if (this.topicTerm) {
         if (data.topic && data.topic.id) {
@@ -31,6 +34,10 @@ define(['jquery', 'utils/pubsub', 'controller', 'ui/list', 'ui/list/item/news'],
         } else {
           message = 'I could not find any articles about ' +this.topicTerm;
           pubsub.emitEvent('speech:speak', [message]);
+          setTimeout(function(){
+            _this.hideLoadingMessage();
+            pubsub.emitEvent('news:unknownTopic');
+          }, 4000);
           return;
         }
       }
