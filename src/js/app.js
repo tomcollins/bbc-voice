@@ -57,7 +57,7 @@ require(['jquery',
     page(route);
   });
 
-  pubsub.addListener('example:news', function() { 
+  pubsub.addListener('example:news', function() {
     page('/news');
   });
   pubsub.addListener('example:weather', function() {
@@ -82,12 +82,12 @@ require(['jquery',
     doRequestedRoute();
   });
   pubsub.addListener('restart', function() {
-    page('/');  
+    page('/');
   });
   pubsub.addListener('error', function(type) {
     var route = '/error';
     if (type) {
-      route += '/' +type
+      route += '/' +type;
     }
     page(route);
   });
@@ -117,7 +117,7 @@ require(['jquery',
       requestRoute('news', prepareContext(context));
     },
     routeWeather = function(context) {
-      requestRoute('news', prepareContext(context));
+      requestRoute('weather', prepareContext(context));
     },
     routeSport = function(context) {
       requestRoute('sport', prepareContext(context));
@@ -136,6 +136,7 @@ require(['jquery',
     };
 
   //page.base('/');
+
   page('/', routeIndex);
   page('/news', routeNews);
   page('/news/:topic', routeNews);
