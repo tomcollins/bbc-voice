@@ -7,12 +7,15 @@ define(['jquery', 'utils/pubsub'],
       var _this = this;
       this.$element = $('#autoplay');
       this.disable();
-      this.$element.click(function () {
-        if (_this.isEnabled) {
-          _this.disable();
-        } else {
-          _this.enable();
-        }
+      pubsub.addListener('microphone:allowed', function() {
+        _this.$element.addClass('enabled');
+        _this.$element.click(function () {
+          if (_this.isEnabled) {
+            _this.disable();
+          } else {
+            _this.enable();
+          }
+        });
       });
     };
 

@@ -46,7 +46,7 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
     };
 
     Controller.prototype.getTitle = function() {
-      return 'Module Title';
+      return 'BBC Voice';
     };
 
     Controller.prototype.checkDataState = function() {
@@ -122,6 +122,9 @@ define(['jquery', 'utils/pubsub', 'ui/list', 'ui/list/item/news'],
         dataType: 'json',
         success: function(data) {
           callback(data);
+        },
+        error: function() {
+          pubsub.emitEvent('error', ['http']);
         }
       });
     };

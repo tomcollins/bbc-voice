@@ -44,30 +44,54 @@ body a {
 }
 #bbc-logo {
   position: relative;
-  top: 10px;
+  top: 12px;
   left: 0;
 }
 
+#restart,
 #autoplay {
-  cursor: pointer;
   color: #333;
-  opacity: 0.5;
   font-weight: bold;
-  top: 12px;
-  left: 545px;
   position: absolute;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 5px 8px;
+  opacity: 0.5;
 }
-
-#autoplay.autoplay-enabled {
+#restart.enabled {
+  cursor: pointer;
+  opacity: 1;
+}
+#autoplay.enabled {
+  cursor: pointer;
+  opacity: 0.5;
+}
+#autoplay.enabled.autoplay-enabled {
   opacity: 1;
 }
 
+#restart.enabled:hover,
+#autoplay.enabled:hover {
+  opacity: 1;
+  background: #333;
+  color: #fff;
+}
+
+#restart {
+  top: 6px;
+  left: 464px;
+}
+
+#autoplay {
+  top: 6px;
+  left: 537px;
+}
+
 #voice-input {
-  cursor: pointer;
   top: 4px;
   right: 0;
   position: absolute;
-  border: 2px solid rgb(0, 0, 0);
+  border: 2px solid #333;
   padding: 8px;
   border-radius: 100px;
   display: inline;
@@ -76,11 +100,23 @@ body a {
   transition-property: border-color;
   transition-timing-function: ease-out;
   transition-duration: 0.3s;
+  opacity: 0.5;
 }
-#voice-input.muted {
+#voice-input.enabled {
+  cursor: pointer;
+  opacity: 1;
+}
+#voice-input.enabled:hover {
+  background: #333;
+}
+#voice-input.enabled:hover polygon,
+#voice-input.enabled.success:hover polygon {
+  fill: #fff;
+}
+#voice-input.enabled.muted {
   border-color: red;
 }
-#voice-input.muted polygon {
+#voice-input.enabled.muted polygon {
   fill: red;
   transition-property: border-color;
   transition-timing-function: ease-out;
@@ -180,7 +216,8 @@ h1 {
     transition-timing-function: ease-out;
     transition-duration: 0.3s;
 }
-.welcome li {
+.welcome li,
+.welcome p.fade {
     position: relative;
     font-size: 1.4em;
     transition-property: top, opacity;
@@ -190,7 +227,8 @@ h1 {
     top: 100px;
     left: 0;
 }
-.welcome-active li {
+.welcome-active li,
+.welcome-active p.fade {
   top: 0;
   opacity: 1;
 }

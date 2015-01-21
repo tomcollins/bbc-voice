@@ -8,7 +8,9 @@ define([
     'controllers/sport/fixtures', 
     'controllers/sport/tables', 
     'controllers/travel', 
-    'controllers/welcome'
+    'controllers/welcome',
+    'controllers/microphone',
+    'controllers/error'
   ],
   function(
     $, 
@@ -18,34 +20,37 @@ define([
     ControllerSportFixtures, 
     ControllerSportTables, 
     ControllerTravel, 
-    ControllerWelcome
+    ControllerWelcome,
+    ControllerMicrophone,
+    ControllerError
   ) {
 
     var Controllers = function() {
       this.currentController = undefined;
       this.modules = {
         news: {
-          label: 'News',
           class: ControllerNews
         },
         weather: {
-          label: 'Weather',
           class: ControllerWeather
         },
         sport: {
-          label: 'Sport',
           class: {
             fixtures: ControllerSportFixtures,
             tables: ControllerSportTables
           }
         },
         travel: {
-          label: 'Travel',
           class: ControllerTravel
         },
         welcome: {
-          label: 'BBC Voice',
           class: ControllerWelcome
+        },
+        microphone: {
+          class: ControllerMicrophone
+        },
+        error: {
+          class: ControllerError
         }
       };
       this.$wrap = $('#wrap');

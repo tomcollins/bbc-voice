@@ -6,6 +6,12 @@ define(['jquery', 'utils/pubsub'],
       this.$voiceInput = $('#voice-input');
       this.isMuted = false;
 
+      pubsub.addListener('microphone:allowed', function() {
+        _this.$voiceInput.addClass('enabled');
+        _this.$voiceInput.on('click', function() {
+          pubsub.emitEvent('voice:toggleMute');
+        });
+      });
       pubsub.addListener('voice:mute', function() {
         _this.mute();
       });
@@ -14,10 +20,6 @@ define(['jquery', 'utils/pubsub'],
       });
       pubsub.addListener('voice:trigger', function() {
         _this.trigger();
-      });
-
-      this.$voiceInput.on('click', function() {
-        pubsub.emitEvent('voice:toggleMute');
       });
     };
 

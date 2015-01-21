@@ -10,10 +10,6 @@ define(['jquery', 'utils/pubsub', 'controller'],
     ControllerWelcome.prototype = Object.create(Controller.prototype);
     ControllerWelcome.prototype.constructor = ControllerWelcome;
 
-    ControllerWelcome.prototype.getTitle = function() {
-      return 'BBC Voice';
-    };
-
     ControllerWelcome.prototype.hide = function(callback) {
       var _this = this;
       this.removePubSubEvents();

@@ -23,6 +23,9 @@ define(['utils/pubsub'], function(pubsub) {
     this.recognition.continuous     = true;
     this.recognition.interimResults = true;
     this.recognition.lang           = this.lang;
+    this.recognition.onstart        = function () {  
+        pubsub.emitEvent('microphone:allowed');
+    };
     this.recognition.onerror        = function (err) {  };
     this.recognition.onresult       = function (event) {
       _this.speechInputHandler(event, callback);
